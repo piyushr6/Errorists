@@ -1,10 +1,23 @@
-import React from 'react'
-import { Calendar, Ticket, Users, Star, MapPin, Clock } from 'lucide-react'
-import FeaturedEvent from '../components/FeaturedEvent'
-import EventCard from '../components/EventCard'
-import ComedianCard from '../components/ComedianCard'
-import Navbar from '../components/Navbar'
+import React, { useState } from "react";
+import PricingPlans from "../components/PricingPlans";
+import {
+  Calendar,
+  Ticket,
+  Users,
+  Star,
+  MapPin,
+  Menu,
+  X,
+  User,
+  Settings,
+} from "lucide-react";
+import FeaturedEvent from "../components/FeaturedEvent";
+import EventCard from "../components/EventCard";
+import ComedianCard from "../components/ComedianCard";
+
 export default function CustomerDashboard() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isPricingOpen, setIsPricingOpen] = useState(false)
   const upcomingEvents = [
     {
       id: 1,
@@ -14,7 +27,8 @@ export default function CustomerDashboard() {
       time: "8:00 PM",
       venue: "Laugh Factory NYC",
       price: "$25",
-      image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800"
+      image:
+        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800",
     },
     {
       id: 2,
@@ -24,7 +38,8 @@ export default function CustomerDashboard() {
       time: "9:00 PM",
       venue: "Comedy Cellar",
       price: "$30",
-      image: "https://images.unsplash.com/photo-1525618275456-7f91b5c0d8c1?auto=format&fit=crop&q=80&w=800"
+      image:
+        "https://images.unsplash.com/photo-1525618275456-7f91b5c0d8c1?auto=format&fit=crop&q=80&w=800",
     },
     {
       id: 3,
@@ -34,9 +49,10 @@ export default function CustomerDashboard() {
       time: "10:00 PM",
       venue: "The Comedy Store",
       price: "$20",
-      image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800"
-    }
-  ]
+      image:
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
+    },
+  ];
 
   const featuredComedians = [
     {
@@ -45,7 +61,8 @@ export default function CustomerDashboard() {
       specialty: "Observational Comedy",
       rating: 4.8,
       shows: 150,
-      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800"
+      image:
+        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
     },
     {
       id: 2,
@@ -53,7 +70,8 @@ export default function CustomerDashboard() {
       specialty: "Improv Comedy",
       rating: 4.9,
       shows: 200,
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800"
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800",
     },
     {
       id: 3,
@@ -61,156 +79,230 @@ export default function CustomerDashboard() {
       specialty: "Stand-up Comedy",
       rating: 4.7,
       shows: 120,
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"
-    }
-  ]
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      
-      <header className="bg-gradient-to-r from-purple-800 to-indigo-900 text-white">
-          <nav className="container mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              {/* Logo Section */}
-              <div className="flex items-center space-x-2">
-                <Ticket className="w-8 h-8" />
-                <span className="text-2xl font-bold">ComedyHub</span>
-              </div>
-
-              {/* Navigation Links */}
-              <div className="hidden md:flex space-x-8">
-                <a href="#events" className="hover:text-purple-200">Events</a>
-                <a href="#comedians" className="hover:text-purple-200">Comedians</a>
-                <a href="#venues" className="hover:text-purple-200">Venues</a>
-                <a href="#blog" className="hover:text-purple-200">Blog</a>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex space-x-4 items-center">
-                <button className="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold transition-colors">
-                  Book Tickets
-                </button>
-                <button id="premium-button" className="bg-yellow-400 text-orange-500 px-6 py-2 rounded-full font-semibold relative overflow-hidden">
-                  Buy Premium
-                </button>
-              </div>
-            </div>
-          </nav>
-      </header>
-
-
-      {/* Featured Event */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <FeaturedEvent
-            title="Comedy Fest 2024"
-            date="April 1-3, 2024"
-            description="Join us for three days of non-stop laughter featuring the biggest names in comedy!"
-            image="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1200"
-          />
-        </div>
-      </section>
-
-      {/* Upcoming Events */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold mb-12 text-center">Upcoming Events</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {upcomingEvents.map(event => (
-              <EventCard key={event.id} event={event} />
-            ))}
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full bg-gradient-to-b from-purple-800 to-indigo-900 text-white w-64 transform ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 transition-transform duration-300 z-50 flex flex-col`}
+      >
+        <div className="flex items-center justify-between px-6 py-4">
+          <div className="flex items-center space-x-2">
+            <Ticket className="w-8 h-8" />
+            <span className="text-2xl font-bold">ComedyHub</span>
           </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="md:hidden text-white"
+          >
+            <X className="w-6 h-6" />
+          </button>
         </div>
-      </section>
 
-      {/* Featured Comedians */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold mb-12 text-center">Featured Comedians</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredComedians.map(comedian => (
-              <ComedianCard key={comedian.id} comedian={comedian} />
-            ))}
-          </div>
+        {/* Navigation Links */}
+        <nav className="px-6 mt-6 space-y-4">
+          <a href="#events" className="block text-lg hover:text-purple-300">
+            Events
+          </a>
+          <a href="#comedians" className="block text-lg hover:text-purple-300">
+            Comedians
+          </a>
+          <a href="#venues" className="block text-lg hover:text-purple-300">
+            Venues
+          </a>
+          <a href="#blog" className="block text-lg hover:text-purple-300">
+            Blog
+          </a>
+
+          {/* Buy Premium Button */}
+          <button
+            onClick={() => setIsPricingOpen(true)}
+             className="w-full border-2 border-yellow-400 text-yellow-400 px-4 py-2 rounded-full font-semibold relative
+              hover:text-orange-500 transition duration-300
+              before:content-[''] before:absolute before:inset-0 before:rounded-full
+              before:border-2 before:border-yellow-400 before:blur-md before:animate-pulse"
+          >
+            Buy Premium
+          </button>
+        </nav>
+
+        {/* Profile & Settings at Bottom */}
+        <div className="mt-auto px-6 py-4 space-y-4">
+          <button className="flex items-center w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full font-semibold text-white">
+            <User className="w-5 h-5 mr-2" />
+            Profile
+          </button>
+          <button className="flex items-center w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full font-semibold text-white">
+            <Settings className="w-5 h-5 mr-2" />
+            Settings
+          </button>
         </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-purple-800 to-indigo-900 text-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <Calendar className="w-8 h-8 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold mb-2">200+</h3>
-              <p className="text-purple-200">Shows Monthly</p>
-            </div>
-            <div>
-              <Users className="w-8 h-8 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold mb-2">50k+</h3>
-              <p className="text-purple-200">Happy Customers</p>
-            </div>
-            <div>
-              <Star className="w-8 h-8 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold mb-2">100+</h3>
-              <p className="text-purple-200">Top Comedians</p>
-            </div>
-            <div>
-              <MapPin className="w-8 h-8 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold mb-2">20+</h3>
-              <p className="text-purple-200">Venues</p>
-            </div>
-          </div>
+        {isPricingOpen && <PricingPlans onClose={() => setIsPricingOpen(false)} />}
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 ml-0 md:ml-64">
+        {/* Top Bar for Mobile */}
+        <div className="bg-white shadow-md md:hidden flex items-center justify-between px-4 py-3">
+          <button onClick={() => setSidebarOpen(true)}>
+            <Menu className="w-6 h-6" />
+          </button>
+          <span className="text-xl font-bold">ComedyHub</span>
         </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-6">
-                <Ticket className="w-6 h-6" />
-                <span className="text-xl font-bold">ComedyHub</span>
+        {/*Pricing  Modal */}
+        {isPricingOpen && <PricingPlans onClose={() => setIsPricingOpen(false)} />}
+
+        {/* Content */}
+        <main className="p-6">
+          {/* Featured Event */}
+          <section className="py-8">
+            <FeaturedEvent
+              title="Comedy Fest 2024"
+              date="April 1-3, 2024"
+              description="Join us for three days of non-stop laughter featuring the biggest names in comedy!"
+              image="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1200"
+            />
+          </section>
+
+          {/* Upcoming Events */}
+          <section className="py-8">
+            <h2 className="text-3xl font-bold mb-6">Upcoming Events</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {upcomingEvents.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+            </div>
+          </section>
+
+          {/* Featured Comedians */}
+          <section className="py-8">
+            <h2 className="text-3xl font-bold mb-6">Featured Comedians</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredComedians.map((comedian) => (
+                <ComedianCard key={comedian.id} comedian={comedian} />
+              ))}
+            </div>
+          </section>
+
+          <section className="py-16 bg-gradient-to-r from-purple-800 to-indigo-900 text-white">
+            <div className="container mx-auto px-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                  <Calendar className="w-8 h-8 mx-auto mb-4" />
+                  <h3 className="text-4xl font-bold mb-2">200+</h3>
+                  <p className="text-purple-200">Shows Monthly</p>
+                </div>
+                <div>
+                  <Users className="w-8 h-8 mx-auto mb-4" />
+                  <h3 className="text-4xl font-bold mb-2">50k+</h3>
+                  <p className="text-purple-200">Happy Customers</p>
+                </div>
+                <div>
+                  <Star className="w-8 h-8 mx-auto mb-4" />
+                  <h3 className="text-4xl font-bold mb-2">100+</h3>
+                  <p className="text-purple-200">Top Comedians</p>
+                </div>
+                <div>
+                  <MapPin className="w-8 h-8 mx-auto mb-4" />
+                  <h3 className="text-4xl font-bold mb-2">20+</h3>
+                  <p className="text-purple-200">Venues</p>
+                </div>
               </div>
-              <p className="text-gray-400">Your premier destination for live comedy entertainment.</p>
             </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Events</a></li>
-                <li><a href="#" className="hover:text-white">Comedians</a></li>
-                <li><a href="#" className="hover:text-white">Venues</a></li>
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Contact Us</a></li>
-                <li><a href="#" className="hover:text-white">FAQs</a></li>
-                <li><a href="#" className="hover:text-white">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
-              <p className="text-gray-400 mb-4">Subscribe to get updates on events and special offers.</p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="bg-gray-800 text-white px-4 py-2 rounded-l-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-600"
-                />
-                <button className="bg-purple-600 px-4 py-2 rounded-r-lg hover:bg-purple-700 transition-colors">
-                  Subscribe
-                </button>
+          </section>
+
+          {/* Footer */}
+          <footer className="bg-gray-900 text-white py-12">
+            <div className="container mx-auto px-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                  <div className="flex items-center space-x-2 mb-6">
+                    <Ticket className="w-6 h-6" />
+                    <span className="text-xl font-bold">ComedyHub</span>
+                  </div>
+                  <p className="text-gray-400">
+                    Your premier destination for live comedy entertainment.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+                  <ul className="space-y-2 text-gray-400">
+                    <li>
+                      <a href="#" className="hover:text-white">
+                        Events
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white">
+                        Comedians
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white">
+                        Venues
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white">
+                        Blog
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold mb-4">Support</h4>
+                  <ul className="space-y-2 text-gray-400">
+                    <li>
+                      <a href="#" className="hover:text-white">
+                        Contact Us
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white">
+                        FAQs
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white">
+                        Terms of Service
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white">
+                        Privacy Policy
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
+                  <p className="text-gray-400 mb-4">
+                    Subscribe to get updates on events and special offers.
+                  </p>
+                  <div className="flex">
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="bg-gray-800 text-white px-4 py-2 rounded-l-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    />
+                    <button className="bg-purple-600 px-4 py-2 rounded-r-lg hover:bg-purple-700 transition-colors">
+                      Subscribe
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </footer>
+          </footer>
+        </main>
+      </div>
     </div>
-  )
+  );
 }
-
