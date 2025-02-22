@@ -40,6 +40,10 @@ function App() {
               <Route path="analytics" element={<AdminAnalytics />} />
             </Route>
             <Route path="/location-manager" element={<VenueDashboard />} />
+            <Route path="/" element={<AuthPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/cust-Dash" element={<CustomerDashboard />} />
+            <Route path="/admin-Dash" element={<AdminDashboard />} />
           </Routes>
         </div>
       </div>
