@@ -17,12 +17,13 @@ const AuthPage = () => {
 
     <div className="flex min-h-screen">
       {/* Left Section - Promo */}
-      <div className="w-1/2 bg-purple-600 text-white flex flex-col justify-center items-center p-10 relative">
+      <div className="w-1/2 bg-purple-600 text-white flex flex-col justify-center items-center p-10 relative opacity-90">
         <img
           src="src/assets/images/stage.jpg"
           alt="App Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
+        <h2 className="white font-extrabold z-20 text-7xl">Comedy Hub</h2>
       </div>
 
       {/* Right Section - Login Form */}
@@ -48,43 +49,42 @@ const AuthPage = () => {
             <input type="password" placeholder="Enter your password" className="w-full border rounded-lg px-4 py-2" />
 
             {/* Role Selection Dropdown */}
-          <div className="relative mt-4">
-            <button
-              onClick={() => setShowDropdown((prev) => !prev)}
-              className="w-full bg-white border rounded-lg px-4 py-2 text-left cursor-pointer flex items-center justify-between focus:outline-none"
-            >
-              {role || "Select Role"}
-              <FaChevronDown className="text-gray-500" />
-            </button>
+            <div className="relative mt-4">
+              <button
+                onClick={() => setShowDropdown((prev) => !prev)}
+                className="w-full bg-white border rounded-lg px-4 py-2 text-left cursor-pointer flex items-center justify-between focus:outline-none"
+              >
+                {role || "Select Role"}
+                <FaChevronDown className="text-gray-500" />
+              </button>
 
-            {showDropdown && (
-              <ul className="absolute w-full bg-white border rounded-lg mt-1 z-10 overflow-hidden">
-                {roles.map((r, index) => (
-                  <li
-                    key={r}
-                    onClick={() => handleRoleSelect(r)}
-                    className={`px-4 py-2 cursor-pointer hover:bg-purple-600 hover:text-white ${
-                      index === 0 ? "rounded-t-lg" : index === roles.length - 1 ? "rounded-b-lg" : ""
-                    }`}
-                  >
-                    {r}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+              {showDropdown && (
+                <ul className="absolute w-full bg-white border rounded-lg mt-1 z-10 overflow-hidden">
+                  {roles.map((r, index) => (
+                    <li
+                      key={r}
+                      onClick={() => handleRoleSelect(r)}
+                      className={`px-4 py-2 cursor-pointer hover:bg-purple-600 hover:text-white ${index === 0 ? "rounded-t-lg" : index === roles.length - 1 ? "rounded-b-lg" : ""
+                        }`}
+                    >
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             <div className="text-right text-purple-600 cursor-pointer text-sm">Forgot Password?</div>
           </div>
 
-          
+
 
           {/* Login Button */}
           <Link to='cust-Dash'>
             <button className="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg cursor-pointer transition-colors">
-                Login
+              Login
             </button>
           </Link>
-          
+
 
           {/* Register Link */}
           <p className="mt-4 text-center text-gray-600">
