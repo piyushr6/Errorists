@@ -1,22 +1,16 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useAuthStore from '../store/authStore';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { signIn } = useAuthStore();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await signIn(email, password);
-      navigate('/');
-    } catch (error) {
-      setError(error.message);
-    }
+    console.log("Email:", email);
+    console.log("Password:", password);
+    navigate("/");
   };
 
   return (
@@ -28,11 +22,6 @@ function Login() {
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-              {error}
-            </div>
-          )}
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <input

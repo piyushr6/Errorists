@@ -1,23 +1,13 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useAuthStore from '../store/authStore';
+import { useState } from "react";
 
 function Register() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('customer');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-  const { signUp } = useAuthStore();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("customer");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await signUp(email, password, role);
-      navigate('/');
-    } catch (error) {
-      setError(error.message);
-    }
+    console.log("User registered with:", { email, password, role });
   };
 
   return (
@@ -29,11 +19,6 @@ function Register() {
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-              {error}
-            </div>
-          )}
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <input
@@ -64,6 +49,7 @@ function Register() {
                 <option value="customer">Customer</option>
                 <option value="artist">Artist</option>
                 <option value="venue">Venue Manager</option>
+                <option value="admin">Admin</option>
               </select>
             </div>
           </div>
