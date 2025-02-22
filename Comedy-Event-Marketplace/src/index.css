@@ -53,9 +53,14 @@ body {
 }
 
 #premium-button:hover {
-  box-shadow: 0 0 5px rgba(255, 223, 0, 0.8), 0 0 10px rgba(255, 223, 0, 0.6);
+  box-shadow: 0 0 2px rgba(255, 223, 0, 0.8), 0 0 2px rgba(255, 223, 0, 0.6);
 }
 
 #premium-button:hover::before {
   opacity: 1;
+}
+
+.pricing:hover{
+    transform: scale(1.1);
+    transition: 0.3s ease;
 }
