@@ -24,6 +24,7 @@ export default function CustomerDashboard() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [comedianIndex, setComedianIndex] = useState(0);
   const [showSettings, setShowSettings] = useState(false); 
+  
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
@@ -45,6 +46,19 @@ export default function CustomerDashboard() {
     setComedianIndex((prevIndex) =>
       prevIndex === featuredComedians.length - 3 ? 0 : prevIndex + 1
     );
+  };
+
+
+  
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = upcomingEvents.filter(event =>
+      event.title.toLowerCase().includes(query) ||
+      event.description.toLowerCase().includes(query)
+    );
+    setFilteredEvents(filtered);
   };
 
   const upcomingEvents = [
@@ -148,7 +162,7 @@ export default function CustomerDashboard() {
         "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 4,
+      id: 10,
       title: "Late Night Laughs",
       comedian: "David Chen",
       date: "March 25, 2024",
@@ -159,7 +173,7 @@ export default function CustomerDashboard() {
         "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 5,
+      id: 11,
       title: "Late Night Laughs",
       comedian: "David Chen",
       date: "March 25, 2024",
@@ -170,7 +184,7 @@ export default function CustomerDashboard() {
         "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 6,
+      id: 12,
       title: "Late Night Laughs",
       comedian: "David Chen",
       date: "March 25, 2024",
@@ -181,7 +195,7 @@ export default function CustomerDashboard() {
         "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 7,
+      id: 13,
       title: "Late Night Laughs",
       comedian: "David Chen",
       date: "March 25, 2024",
@@ -192,7 +206,7 @@ export default function CustomerDashboard() {
         "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 8,
+      id: 14,
       title: "Late Night Laughs",
       comedian: "David Chen",
       date: "March 25, 2024",
@@ -203,7 +217,7 @@ export default function CustomerDashboard() {
         "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 9,
+      id: 15,
       title: "Late Night Laughs",
       comedian: "David Chen",
       date: "March 25, 2024",
@@ -299,6 +313,8 @@ export default function CustomerDashboard() {
     },
   ];
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredEvents, setFilteredEvents] = useState(upcomingEvents);
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
@@ -350,7 +366,7 @@ export default function CustomerDashboard() {
         <div className="mt-auto px-6 py-4 space-y-4">
           
           <button 
-          onClick={()=>setShowSettings(true)}
+          onClick={()=>setShowSettings((prev)=>!prev)}
           className="flex items-center w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full font-semibold text-white">
             <Settings className="w-5 h-5 mr-2" />
             Settings
@@ -393,6 +409,8 @@ export default function CustomerDashboard() {
               <input
                 type="text"
                 placeholder="Search events..."
+                value={searchQuery}
+                onChange={handleSearch}
                 className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 focus:outline-none shadow-sm text-gray-700"
               />
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
@@ -427,7 +445,7 @@ export default function CustomerDashboard() {
 
             {/* Events Wrapper */}
             <div className="flex overflow-hidden justify-center space-x-4 px-12">
-              {upcomingEvents
+              {filteredEvents
                 .slice(currentIndex, currentIndex + 3)
                 .map((event) => (
                   <div key={event.id} className="event-card w-1/3 flex-shrink-0">
@@ -435,6 +453,7 @@ export default function CustomerDashboard() {
                   </div>
                 ))}
             </div>
+
 
             <button
               onClick={handleNext}
