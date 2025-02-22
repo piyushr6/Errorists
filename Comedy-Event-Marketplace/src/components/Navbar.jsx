@@ -1,28 +1,32 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { ShoppingCart, Bell, User } from "lucide-react";
 
-function Navbar() {
+const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Placeholder state
+
   return (
-    <nav className="bg-white shadow-lg fixed top-0 w-full z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="text-xl font-bold text-gray-800">
-            Comedy Hub
-          </Link>
-          <div className="flex items-center space-x-4">
-            <Link to="/events" className="text-gray-600 hover:text-gray-900">
-              Events
-            </Link>
-            <Link to="/login" className="text-gray-600 hover:text-gray-900">
-              Login
-            </Link>
-            <Link to="/register" className="text-gray-600 hover:text-gray-900">
-              Register
-            </Link>
-          </div>
+    <nav className="bg-white shadow-md p-4 flex justify-between items-center">
+      <div className="text-2xl font-bold text-indigo-600">ComedyHub</div>
+      <div className="flex items-center gap-6">
+        <a href="/browse" className="text-gray-700 hover:text-indigo-600">Browse Events</a>
+        <a href="/bookings" className="text-gray-700 hover:text-indigo-600">My Bookings</a>
+        <a href="/favorites" className="text-gray-700 hover:text-indigo-600">Favorites</a>
+        <div className="relative">
+          <ShoppingCart className="w-6 h-6 text-gray-700 hover:text-indigo-600 cursor-pointer" />
         </div>
+        <div className="relative">
+          <Bell className="w-6 h-6 text-gray-700 hover:text-indigo-600 cursor-pointer" />
+        </div>
+        {isLoggedIn ? (
+          <div className="relative">
+            <User className="w-6 h-6 text-gray-700 hover:text-indigo-600 cursor-pointer" />
+          </div>
+        ) : (
+          <a href="/login" className="text-indigo-600 font-semibold">Login/Signup</a>
+        )}
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
