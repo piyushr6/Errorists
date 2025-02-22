@@ -36,18 +36,19 @@ export default function PricingPlans({ onClose }) {
           </div>
 
           {/* Monthly Subscription */}
-          <div className="pricing border-4  rounded-lg p-6 text-center bg-gray-200">
-            <h3 className="text-xl font-semibold text-purple-700 mb-2">Monthly Subscription</h3>
-            <p className="text-3xl font-bold text-purple-700">$4.99<span className="text-lg">/Month</span></p>
-            <ul className="text-left space-y-2 my-6">
-              <li>✅ Streaming in high quality</li>
-              <li>✅ Best audio quality</li>
-              <li>✅ Stream on multiple devices</li>
-              <li>✅ Ad-free experience</li>
-              <li>✅ Download to watch later</li>
-            </ul>
-            <button className="w-full bg-purple-700 text-white py-2 rounded-lg">Get Started</button>
-          </div>
+          <div className="pricing pricing-2 border-4 rounded-lg p-6 text-center text-white bg-gradient-to-r from-purple-500 to-purple-800">
+          <h3 className="text-xl font-semibold mb-2">Monthly Subscription</h3>
+          <p className="text-3xl font-bold">$4.99<span className="text-lg">/Month</span></p>
+          <ul className="text-left space-y-2 my-6">
+            <li>✅ Streaming in high quality</li>
+            <li>✅ Best audio quality</li>
+            <li>✅ Stream on multiple devices</li>
+            <li>✅ Ad-free experience</li>
+            <li>✅ Download to watch later</li>
+          </ul>
+          <button className="w-full bg-white text-purple-700 py-2 rounded-lg font-semibold">Get Started</button>
+        </div>
+
 
           {/* Yearly Subscription */}
           <div className="pricing border rounded-lg p-6 text-center bg-gray-200">
