@@ -70,44 +70,35 @@ export default function CustomerDashboard() {
       {/* Header */}
       
       <header className="bg-gradient-to-r from-purple-800 to-indigo-900 text-white">
-        <nav className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Ticket className="w-8 h-8" />
-              <span className="text-2xl font-bold">ComedyHub</span>
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <a href="#events" className="hover:text-purple-200">Events</a>
-              <a href="#comedians" className="hover:text-purple-200">Comedians</a>
-              <a href="#venues" className="hover:text-purple-200">Venues</a>
-              <a href="#blog" className="hover:text-purple-200">Blog</a>
-            </div>
-            <button className="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold transition-colors">
-              Book Tickets
-            </button>
-          </div>
-        </nav>
+          <nav className="container mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              {/* Logo Section */}
+              <div className="flex items-center space-x-2">
+                <Ticket className="w-8 h-8" />
+                <span className="text-2xl font-bold">ComedyHub</span>
+              </div>
 
-        {/* Hero Section */}
-        <div className="container mx-auto px-6 py-20">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Experience the Best in Live Comedy
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-purple-200">
-              Discover upcoming shows, book tickets, and laugh out loud with the best comedians in town
-            </p>
-            <div className="flex justify-center space-x-4">
-              <button className="bg-white text-purple-900 px-8 py-3 rounded-full font-bold hover:bg-purple-100 transition-colors">
-                View Events
-              </button>
-              <button className="border-2 border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-purple-900 transition-colors">
-                Meet Artists
-              </button>
+              {/* Navigation Links */}
+              <div className="hidden md:flex space-x-8">
+                <a href="#events" className="hover:text-purple-200">Events</a>
+                <a href="#comedians" className="hover:text-purple-200">Comedians</a>
+                <a href="#venues" className="hover:text-purple-200">Venues</a>
+                <a href="#blog" className="hover:text-purple-200">Blog</a>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex space-x-4 items-center">
+                <button className="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-semibold transition-colors">
+                  Book Tickets
+                </button>
+                <button id="premium-button" className="bg-yellow-400 text-orange-500 px-6 py-2 rounded-full font-semibold relative overflow-hidden">
+                  Buy Premium
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
+          </nav>
       </header>
+
 
       {/* Featured Event */}
       <section className="py-16 bg-white">

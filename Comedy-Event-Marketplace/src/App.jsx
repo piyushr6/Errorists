@@ -27,9 +27,14 @@ function App() {
               <Route path="payments" element={<AdminPaymentManagement />} />
               <Route path="analytics" element={<AdminAnalytics />} />
             </Route>
-            <Route path="/customer" element={<CustomerDashboard />} />
+            <Route path="/cust-Dash" element={<CustomerDashboard />} />
             <Route path="/artist" element={<ArtistDashboard />} />
             <Route path="/location-manager" element={<VenueDashboard />} />
+            <Route path="/" element={<AuthPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            
+
+
           </Routes>
         
     </Router>
