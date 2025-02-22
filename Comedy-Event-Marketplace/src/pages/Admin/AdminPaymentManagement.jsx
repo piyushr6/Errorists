@@ -69,7 +69,7 @@ const AdminPaymentManagement = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Venue Management</h2>
+      <h2 className="text-2xl font-bold mb-4">Venue Management</h2>
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr className="bg-gray-200">

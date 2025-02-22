@@ -54,7 +54,7 @@ function AdminEventManagement() {
   };
 
   return (
-    <div className="p-6">
+    <div>
       <h1 className="text-2xl font-bold mb-4">Admin Event Management</h1>
 
       <table className="min-w-full border-collapse border border-gray-300">
