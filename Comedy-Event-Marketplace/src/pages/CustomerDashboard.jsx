@@ -50,28 +50,94 @@ export default function CustomerDashboard() {
   const upcomingEvents = [
     {
       id: 1,
-      title: "Comedy Night Extravaganza",
-      comedian: "Sarah Johnson",
+      title: "Hasi Ka Tadka Night",
+      comedian: "Rohan Joshi",
       date: "March 15, 2024",
       time: "8:00 PM",
-      venue: "Laugh Factory NYC",
-      price: "$25",
+      venue: "The Comedy Club, Mumbai",
+      price: "₹500",
+      image:
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+      id: 2,
+      title: "Desi Stand-up Dhamaka",
+      comedian: "Anubhav Singh Bassi",
+      date: "March 20, 2024",
+      time: "9:00 PM",
+      venue: "Laugh Riot, Delhi",
+      price: "₹750",
+      image:
+        "https://img.freepik.com/free-photo/process-creating-stand-up-comedy_23-2151053521.jpg?ga=GA1.1.1703137665.1739865512&semt=ais_hybrid",
+    },
+    {
+      id: 3,
+      title: "Bangalore Comedy Special",
+      comedian: "Sumukhi Suresh",
+      date: "March 25, 2024",
+      time: "10:00 PM",
+      venue: "The Biere Club, Bangalore",
+      price: "₹600",
       image:
         "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 2,
-      title: "Stand-up Spectacular",
-      comedian: "Mike Richards",
-      date: "March 20, 2024",
-      time: "9:00 PM",
-      venue: "Comedy Cellar",
-      price: "$30",
+      id: 4,
+      title: "Late Night Laughs",
+      comedian: "David Chen",
+      date: "March 25, 2024",
+      time: "10:00 PM",
+      venue: "The Comedy Store",
+      price: "$20",
       image:
-        "https://images.unsplash.com/photo-1525618275456-7f91b5c0d8c1?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 3,
+      id: 5,
+      title: "Late Night Laughs",
+      comedian: "David Chen",
+      date: "March 25, 2024",
+      time: "10:00 PM",
+      venue: "The Comedy Store",
+      price: "$20",
+      image:
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+      id: 6,
+      title: "Late Night Laughs",
+      comedian: "David Chen",
+      date: "March 25, 2024",
+      time: "10:00 PM",
+      venue: "The Comedy Store",
+      price: "$20",
+      image:
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+      id: 7,
+      title: "Late Night Laughs",
+      comedian: "David Chen",
+      date: "March 25, 2024",
+      time: "10:00 PM",
+      venue: "The Comedy Store",
+      price: "$20",
+      image:
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+      id: 8,
+      title: "Late Night Laughs",
+      comedian: "David Chen",
+      date: "March 25, 2024",
+      time: "10:00 PM",
+      venue: "The Comedy Store",
+      price: "$20",
+      image:
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+      id: 9,
       title: "Late Night Laughs",
       comedian: "David Chen",
       date: "March 25, 2024",
@@ -152,6 +218,33 @@ export default function CustomerDashboard() {
   const featuredComedians = [
     {
       id: 1,
+      name: "Kenny Sebastian",
+      specialty: "Musical Comedy",
+      rating: 4.8,
+      shows: 150,
+      image:
+        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+      id: 2,
+      name: "Neeti Palta",
+      specialty: "Observational Comedy",
+      rating: 4.9,
+      shows: 200,
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+      id: 3,
+      name: "Zakir Khan",
+      specialty: "Storytelling Comedy",
+      rating: 4.7,
+      shows: 120,
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+      id: 4,
       name: "Alex Thompson",
       specialty: "Observational Comedy",
       rating: 4.8,
@@ -160,7 +253,7 @@ export default function CustomerDashboard() {
         "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 2,
+      id: 5,
       name: "Maria Garcia",
       specialty: "Improv Comedy",
       rating: 4.9,
@@ -169,7 +262,7 @@ export default function CustomerDashboard() {
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 3,
+      id: 6,
       name: "James Wilson",
       specialty: "Stand-up Comedy",
       rating: 4.7,
@@ -210,9 +303,8 @@ export default function CustomerDashboard() {
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full bg-gradient-to-b from-purple-800 to-indigo-900 text-white w-64 transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 z-50 flex flex-col`}
+        className={`fixed top-0 left-0 h-full bg-gradient-to-b from-purple-800 to-indigo-900 text-white w-64 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-300 z-50 flex flex-col`}
       >
         <div className="flex items-center justify-between px-6 py-4">
           <div className="flex items-center space-x-2">
