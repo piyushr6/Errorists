@@ -23,14 +23,7 @@ function App() {
           {" "}
           {/* Offset main content for navbar */}
           <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/artist" element={<ArtistDashboard />} />
-            <Route path="/events" element={<CustomerDashboard />} />
-
-            {/* Admin Routes with Persistent Sidebar */}
+            
             <Route path="/admin" element={<AdminDashboard />}>
               <Route index element={<AdminEventManagement />} />
               <Route path="events" element={<AdminEventManagement />} />
@@ -39,11 +32,12 @@ function App() {
               <Route path="payments" element={<AdminPaymentManagement />} />
               <Route path="analytics" element={<AdminAnalytics />} />
             </Route>
+            <Route path="/cust-Dash" element={<CustomerDashboard />} />
+            <Route path="/artist" element={<ArtistDashboard />} />
             <Route path="/location-manager" element={<VenueDashboard />} />
             <Route path="/" element={<AuthPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/cust-Dash" element={<CustomerDashboard />} />
-            <Route path="/admin-Dash" element={<AdminDashboard />} />
+           
           </Routes>
         </div>
       </div>
