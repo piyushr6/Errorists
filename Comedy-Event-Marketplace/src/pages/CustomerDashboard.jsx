@@ -17,48 +17,48 @@ import ComedianCard from "../components/ComedianCard";
 
 export default function CustomerDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isPricingOpen, setIsPricingOpen] = useState(false)
+  const [isPricingOpen, setIsPricingOpen] = useState(false);
   const upcomingEvents = [
     {
       id: 1,
-      title: "Comedy Night Extravaganza",
-      comedian: "Sarah Johnson",
+      title: "Hasi Ka Tadka Night",
+      comedian: "Rohan Joshi",
       date: "March 15, 2024",
       time: "8:00 PM",
-      venue: "Laugh Factory NYC",
-      price: "$25",
+      venue: "The Comedy Club, Mumbai",
+      price: "₹500",
       image:
-        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
     },
     {
       id: 2,
-      title: "Stand-up Spectacular",
-      comedian: "Mike Richards",
+      title: "Desi Stand-up Dhamaka",
+      comedian: "Anubhav Singh Bassi",
       date: "March 20, 2024",
       time: "9:00 PM",
-      venue: "Comedy Cellar",
-      price: "$30",
+      venue: "Laugh Riot, Delhi",
+      price: "₹750",
       image:
-        "https://images.unsplash.com/photo-1525618275456-7f91b5c0d8c1?auto=format&fit=crop&q=80&w=800",
+        "https://img.freepik.com/free-photo/process-creating-stand-up-comedy_23-2151053521.jpg?ga=GA1.1.1703137665.1739865512&semt=ais_hybrid",
     },
     {
       id: 3,
-      title: "Late Night Laughs",
-      comedian: "David Chen",
+      title: "Bangalore Comedy Special",
+      comedian: "Sumukhi Suresh",
       date: "March 25, 2024",
       time: "10:00 PM",
-      venue: "The Comedy Store",
-      price: "$20",
+      venue: "The Biere Club, Bangalore",
+      price: "₹600",
       image:
-        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
+        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800",
     },
   ];
 
   const featuredComedians = [
     {
       id: 1,
-      name: "Alex Thompson",
-      specialty: "Observational Comedy",
+      name: "Kenny Sebastian",
+      specialty: "Musical Comedy",
       rating: 4.8,
       shows: 150,
       image:
@@ -66,8 +66,8 @@ export default function CustomerDashboard() {
     },
     {
       id: 2,
-      name: "Maria Garcia",
-      specialty: "Improv Comedy",
+      name: "Neeti Palta",
+      specialty: "Observational Comedy",
       rating: 4.9,
       shows: 200,
       image:
@@ -75,8 +75,8 @@ export default function CustomerDashboard() {
     },
     {
       id: 3,
-      name: "James Wilson",
-      specialty: "Stand-up Comedy",
+      name: "Zakir Khan",
+      specialty: "Storytelling Comedy",
       rating: 4.7,
       shows: 120,
       image:
@@ -88,9 +88,8 @@ export default function CustomerDashboard() {
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full bg-gradient-to-b from-purple-800 to-indigo-900 text-white w-64 transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 z-50 flex flex-col`}
+        className={`fixed top-0 left-0 h-full bg-gradient-to-b from-purple-800 to-indigo-900 text-white w-64 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-300 z-50 flex flex-col`}
       >
         <div className="flex items-center justify-between px-6 py-4">
           <div className="flex items-center space-x-2">
@@ -123,7 +122,7 @@ export default function CustomerDashboard() {
           {/* Buy Premium Button */}
           <button
             onClick={() => setIsPricingOpen(true)}
-             className="w-full border-2 border-yellow-400 text-yellow-400 px-4 py-2 rounded-full font-semibold relative
+            className="w-full border-2 border-yellow-400 text-yellow-400 px-4 py-2 rounded-full font-semibold relative
               hover:text-orange-500 transition duration-300
               before:content-[''] before:absolute before:inset-0 before:rounded-full
               before:border-2 before:border-yellow-400 before:blur-md before:animate-pulse"
