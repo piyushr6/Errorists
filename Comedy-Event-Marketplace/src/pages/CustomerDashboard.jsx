@@ -3,7 +3,7 @@ import { Calendar, Ticket, Users, Star, MapPin, Clock } from 'lucide-react'
 import FeaturedEvent from '../components/FeaturedEvent'
 import EventCard from '../components/EventCard'
 import ComedianCard from '../components/ComedianCard'
-
+import Navbar from '../components/Navbar'
 export default function CustomerDashboard() {
   const upcomingEvents = [
     {
@@ -68,6 +68,7 @@ export default function CustomerDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
+      
       <header className="bg-gradient-to-r from-purple-800 to-indigo-900 text-white">
         <nav className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">

@@ -59,7 +59,7 @@ const RegisterPage = () => {
 
       {/* Right Section - Registration Form */}
       <div className="w-1/2 flex justify-center items-center">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md register-wrapper">
           <h2 className="text-2xl font-bold text-gray-800">Create your account</h2>
 
           {/* Registration Form */}

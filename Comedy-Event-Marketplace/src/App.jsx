@@ -3,28 +3,23 @@ import Navbar from "./components/Navbar";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import ArtistDashboard from "./pages/ArtistDashboard";
 import CustomerDashboard from "./pages/CustomerDashboard";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import AdminEventManagement from "./pages/Admin/AdminEventManagement";
 import AdminUserManagement from "./pages/Admin/AdminUserManagement";
 import AdminVenueManagement from "./pages/Admin/AdminVenueManagement";
 import AdminPaymentManagement from "./pages/Admin/AdminPaymentManagement";
 import AdminAnalytics from "./pages/Admin/AdminAnalytics";
 import VenueDashboard from "./pages/Location Manager/VenueDashboard";
-
+import AuthPage from './pages/AuthPage'
+import RegisterPage from './pages/RegisterPage'
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50">
-        {/* Sticky Navbar */}
-        <Navbar />
-        <div className="pt-16">
+      
           {" "}
           {/* Offset main content for navbar */}
           <Routes>
-            
-            <Route path="/admin" element={<AdminDashboard />}>
+          
+              <Route path="/admin" element={<AdminDashboard />}>
               <Route index element={<AdminEventManagement />} />
               <Route path="events" element={<AdminEventManagement />} />
               <Route path="users" element={<AdminUserManagement />} />
@@ -39,8 +34,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
            
           </Routes>
-        </div>
-      </div>
+        
     </Router>
   );
 }

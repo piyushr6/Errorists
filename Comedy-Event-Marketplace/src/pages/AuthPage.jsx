@@ -14,6 +14,7 @@ const AuthPage = () => {
   };
 
   return (
+
     <div className="flex min-h-screen">
       {/* Left Section - Promo */}
       <div className="w-1/2 bg-purple-600 text-white flex flex-col justify-center items-center p-10 relative">
@@ -26,7 +27,7 @@ const AuthPage = () => {
 
       {/* Right Section - Login Form */}
       <div className="w-1/2 flex justify-center items-center">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md login-wrapper">
           <h2 className="text-2xl font-bold text-gray-800">Hey there, welcome back</h2>
 
           {/* Social Login Buttons */}
