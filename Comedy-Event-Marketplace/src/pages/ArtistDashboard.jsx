@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import StatsCard from '../components/StatsCard'
-import Sidebar from '../components/SideBar'
-import EventCard from '../components/EventCard'
-import { 
+import StatsCard from '../components/StatsCard';
+import Sidebar from '../components/SideBar';
+import EventCard from '../components/EventCard';
+import {
   Calendar,
   DollarSign,
   Users,
   Star,
   Bell,
-  Search,
   Menu,
-  X,
-  ChevronRight,
-  MessageSquare,
-  Settings,
-  LogOut,
-  TrendingUp,
-  Clock,
-  MapPin
 } from 'lucide-react';
-
 
 function ArtistDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,37 +18,50 @@ function ArtistDashboard() {
   const events = [
     {
       date: '15 Mar',
-      venue: 'The Comedy Store',
+      venue: 'The Comedy Club, Mumbai',
       time: '8:00 PM',
-      location: 'Los Angeles, CA',
+      location: 'Mumbai, Maharashtra',
       status: 'Confirmed',
       capacity: 200,
-      payment: 500
+      payment: 5000,
+      image: 'https://images.pexels.com/photos/3893788/pexels-photo-3893788.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     },
     {
       date: '18 Mar',
-      venue: 'Laugh Factory',
+      venue: 'Laugh Riot, Delhi',
       time: '9:30 PM',
-      location: 'Hollywood, CA',
+      location: 'Delhi, Delhi',
       status: 'Pending',
       capacity: 150,
-      payment: 400
+      payment: 4000,
+      image: 'https://images.pexels.com/photos/789750/pexels-photo-789750.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     },
     {
       date: '22 Mar',
-      venue: 'Improv Club',
+      venue: 'Improv Club, Bangalore',
       time: '7:00 PM',
-      location: 'New York, NY',
+      location: 'Bangalore, Karnataka',
       status: 'Confirmed',
       capacity: 180,
-      payment: 450
-    }
+      payment: 4500,
+      image: 'https://images.pexels.com/photos/15105039/pexels-photo-15105039/free-photo-of-cityscape-at-clear-night.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    },
+    {
+      date: '25 Mar',
+      venue: 'The Biere Club, Pune',
+      time: '10:00 PM',
+      location: 'Pune, Maharashtra',
+      status: 'Confirmed',
+      capacity: 250,
+      payment: 6000,
+      image: 'https://images.pexels.com/photos/1415764/pexels-photo-1415764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="lg:hidden fixed top-4 left-4 z-40">
-        <button 
+        <button
           onClick={() => setSidebarOpen(true)}
           className="p-2 rounded-lg bg-white shadow-md hover:bg-gray-50"
         >
@@ -68,7 +71,7 @@ function ArtistDashboard() {
 
       <div className="flex">
         <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
-        
+
         <main className="flex-1 p-8">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-8">
@@ -89,25 +92,25 @@ function ArtistDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <StatsCard 
+              <StatsCard
                 icon={<Calendar size={24} />}
                 label="Upcoming Shows"
                 value="12"
                 trend="8"
               />
-              <StatsCard 
+              <StatsCard
                 icon={<DollarSign size={24} />}
                 label="Monthly Revenue"
                 value="$3,240"
                 trend="12"
               />
-              <StatsCard 
+              <StatsCard
                 icon={<Users size={24} />}
                 label="Total Audience"
                 value="1,234"
                 trend="24"
               />
-              <StatsCard 
+              <StatsCard
                 icon={<Star size={24} />}
                 label="Avg. Rating"
                 value="4.8"
@@ -122,41 +125,64 @@ function ArtistDashboard() {
                   View All
                 </button>
               </div>
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {events.map((event, index) => (
-                  <EventCard key={index} event={event} />
+                  <div key={index} className="bg-white rounded-2xl border border-gray-100 p-4 shadow">
+                    {/* Image at the top */}
+                    <img
+                      src={event.image}
+                      alt={event.venue}
+                      className="w-full h-40 object-cover rounded-lg mb-4"
+                    />
+                    {/* Venue Name Below the Image */}
+                    <h2 className="text-lg font-semibold text-gray-900">{event.venue}</h2>
+                    {/* Date & Time */}
+                    <p className="text-gray-500 text-sm">{event.date} • {event.time}</p>
+                  </div>
                 ))}
               </div>
             </div>
+
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white rounded-2xl border border-gray-100 p-6">
                 <h2 className="text-xl font-bold text-gray-900 mb-6">Recent Reviews</h2>
                 <div className="space-y-4">
-                  {[1, 2, 3].map((_, index) => (
+                  {[
+                    {
+                      name: "Rohan Sharma",
+                      img: "https://images.unsplash.com/photo-1591084728795-1149f32d9866?w=256&h=256&q=80",
+                      review: "Absolutely hilarious performance! Can't wait to see you again."
+                    },
+                    {
+                      name: "Priya Upadhyay",
+                      img: "https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                      review: "Brilliant show! Laughed non-stop. Looking forward to more!"
+                    }
+                  ].map((reviewer, index) => (
                     <div key={index} className="flex items-start space-x-4 pb-4 border-b border-gray-100 last:border-0">
                       <img
-                        src={`https://images.unsplash.com/photo-${1500 + index}?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80`}
-                        alt="Reviewer"
+                        src={reviewer.img}
+                        alt={reviewer.name}
                         className="w-10 h-10 rounded-xl"
                       />
                       <div>
                         <div className="flex items-center space-x-2">
-                          <h3 className="font-medium text-gray-900">Sarah Johnson</h3>
+                          <h3 className="font-medium text-gray-900">{reviewer.name}</h3>
                           <div className="flex items-center text-yellow-400">
                             {[...Array(5)].map((_, i) => (
                               <Star key={i} size={14} fill="currentColor" />
                             ))}
                           </div>
                         </div>
-                        <p className="text-gray-500 text-sm mt-1">
-                          Absolutely hilarious performance! Can't wait to see you again.
-                        </p>
+                        <p className="text-gray-500 text-sm mt-1">{reviewer.review}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+
 
               <div className="bg-white rounded-2xl border border-gray-100 p-6">
                 <h2 className="text-xl font-bold text-gray-900 mb-6">Performance Analytics</h2>
@@ -178,8 +204,8 @@ function ArtistDashboard() {
             </div>
           </div>
         </main>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 

@@ -18,71 +18,74 @@ import ComedianCard from "../components/ComedianCard";
 export default function CustomerDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isPricingOpen, setIsPricingOpen] = useState(false);
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: "Hasi Ka Tadka Night",
-      comedian: "Rohan Joshi",
-      date: "March 15, 2024",
-      time: "8:00 PM",
-      venue: "The Comedy Club, Mumbai",
-      price: "₹500",
-      image:
-        "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
-    },
-    {
-      id: 2,
-      title: "Desi Stand-up Dhamaka",
-      comedian: "Anubhav Singh Bassi",
-      date: "March 20, 2024",
-      time: "9:00 PM",
-      venue: "Laugh Riot, Delhi",
-      price: "₹750",
-      image:
-        "https://img.freepik.com/free-photo/process-creating-stand-up-comedy_23-2151053521.jpg?ga=GA1.1.1703137665.1739865512&semt=ais_hybrid",
-    },
-    {
-      id: 3,
-      title: "Bangalore Comedy Special",
-      comedian: "Sumukhi Suresh",
-      date: "March 25, 2024",
-      time: "10:00 PM",
-      venue: "The Biere Club, Bangalore",
-      price: "₹600",
-      image:
-        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800",
-    },
-  ];
+  
+  
+    const upcomingEvents = [
+      {
+        id: 1,
+        title: "Hasi Ka Tadka Night",
+        comedian: "Rohan Joshi",
+        date: "March 15, 2024",
+        time: "8:00 PM",
+        venue: "The Comedy Club, Mumbai",
+        price: "₹500",
+        image:
+          "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=800",
+      },
+      {
+        id: 2,
+        title: "Desi Stand-up Dhamaka",
+        comedian: "Anubhav Singh Bassi",
+        date: "March 20, 2024",
+        time: "9:00 PM",
+        venue: "Laugh Riot, Delhi",
+        price: "₹750",
+        image:
+          "https://img.freepik.com/free-photo/process-creating-stand-up-comedy_23-2151053521.jpg?ga=GA1.1.1703137665.1739865512&semt=ais_hybrid",
+      },
+      {
+        id: 3,
+        title: "Bangalore Comedy Special",
+        comedian: "Sumukhi Suresh",
+        date: "March 25, 2024",
+        time: "10:00 PM",
+        venue: "The Biere Club, Bangalore",
+        price: "₹600",
+        image:
+          "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800",
+      },
+    ];
 
-  const featuredComedians = [
-    {
-      id: 1,
-      name: "Kenny Sebastian",
-      specialty: "Musical Comedy",
-      rating: 4.8,
-      shows: 150,
-      image:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
-    },
-    {
-      id: 2,
-      name: "Neeti Palta",
-      specialty: "Observational Comedy",
-      rating: 4.9,
-      shows: 200,
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800",
-    },
-    {
-      id: 3,
-      name: "Zakir Khan",
-      specialty: "Storytelling Comedy",
-      rating: 4.7,
-      shows: 120,
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
-    },
-  ];
+    const featuredComedians = [
+      {
+        id: 1,
+        name: "Kenny Sebastian",
+        specialty: "Musical Comedy",
+        rating: 4.8,
+        shows: 150,
+        image:
+          "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
+      },
+      {
+        id: 2,
+        name: "Neeti Palta",
+        specialty: "Observational Comedy",
+        rating: 4.9,
+        shows: 200,
+        image:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800",
+      },
+      {
+        id: 3,
+        name: "Zakir Khan",
+        specialty: "Storytelling Comedy",
+        rating: 4.7,
+        shows: 120,
+        image:
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
+      },
+      
+    ];
 
   return (
     <div className="flex min-h-screen bg-gray-50">
