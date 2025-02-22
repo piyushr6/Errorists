@@ -3,7 +3,8 @@ import { Calendar, MapPin, Clock } from 'lucide-react';
 
 const EventCard = ({ event }) => {
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105 hover:z-[1]
+">
       <div className="h-48 overflow-hidden">
         <img
           src={event.image}
