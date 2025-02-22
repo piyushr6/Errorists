@@ -35,7 +35,7 @@ const AdminDashboard = () => {
       </aside>
 
       {/* Main Content - No Extra Space */}
-      <main className="flex-1 p-6 ml-64 overflow-auto pt-20">
+      <main className="flex-1 p-6 ml-64 overflow-auto">
         <Outlet />
       </main>
     </div>
