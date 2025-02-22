@@ -348,10 +348,7 @@ export default function CustomerDashboard() {
 
         {/* Profile & Settings at Bottom */}
         <div className="mt-auto px-6 py-4 space-y-4">
-          <button className="flex items-center w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full font-semibold text-white">
-            <User className="w-5 h-5 mr-2" />
-            Profile
-          </button>
+          
           <button 
           onClick={()=>setShowSettings(true)}
           className="flex items-center w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full font-semibold text-white">

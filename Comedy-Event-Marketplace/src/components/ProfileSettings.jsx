@@ -1,80 +1,38 @@
-import React ,{useState}from 'react'
-import {  
-    Calendar,  
-    Ticket,  
-    Users,  
-    Star,  
-    MapPin,  
-    Menu,  
-    X,  
-    User,  
-    Settings,  
-    ChevronLeft,  
-    ChevronRight,  
-  } from "lucide-react"; 
-
+import React from 'react';  
 
 const ProfileSettings = ({ onClose }) => {  
-    return (  
-      <div className="fixed top-0 left-64 w-full h-full bg-white z-40 p-6 overflow-y-auto">  
-        <h2 className="text-3xl font-bold mb-4">Profile Settings</h2>  
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">  
-          <div>  
-            <h3 className="font-semibold">Personal Info</h3>  
-            <div className="flex items-center mb-4">  
-              <img  
-                src="https://via.placeholder.com/100" // Placeholder for user image  
-                alt="User"  
-                className="rounded-full w-24 h-24 mr-4"  
-              />  
-              <div>  
-                <p className="text-lg">Ahmad</p>  
-                <p className="text-gray-500">ahmadsaris@gmail.com</p>  
-              </div>  
-            </div>  
-            <div className="mb-4">  
-              <label className="block mb-1">First Name</label>  
-              <input  
-                type="text"  
-                className="border border-gray-300 rounded w-full p-2"  
-                defaultValue="Ahmad"  
-              />  
-            </div>  
-            <div className="mb-4">  
-              <label className="block mb-1">Last Name</label>  
-              <input  
-                type="text"  
-                className="border border-gray-300 rounded w-full p-2"  
-                defaultValue="Saris"  
-              />  
-            </div>  
-            <button className="bg-purple-600 text-white px-4 py-2 rounded">  
-              Edit Details  
-            </button>  
-          </div>  
-          <div>  
-            <h3 className="font-semibold">General</h3>  
-            <ul>  
-              <li className="mb-2">  
-                <button className="text-purple-600">Edit Profile</button>  
-              </li>  
-              <li className="mb-2">  
-                <button className="text-purple-600">Password</button>  
-              </li>  
-              <li className="mb-2">  
-                <button className="text-purple-600">Data Privacy</button>  
-              </li>  
-            </ul>  
-            <button className="bg-red-600 text-white px-4 py-2 rounded">  
-              Log Out  
-            </button>  
-          </div>  
-        </div>  
-        <button className="absolute top-4 right-4 text-gray-500" onClick={onClose}>  
-          <X className="w-6 h-6" />  
-        </button>  
+  return (  
+    <div className="flex flex-col md:flex-row bg-white min-h-screen">  
+      {/* Sidebar */}  
+      <div className="w-64 bg-gray-100 p-4">  
+        <h2 className="text-xl font-bold mb-4">Profile Settings</h2>  
+        <ul>  
+          <li className="py-2 hover:bg-gray-200 cursor-pointer">Edit Profile</li>  
+          <li className="py-2 hover:bg-gray-200 cursor-pointer">Password</li>  
+          <li className="py-2 hover:bg-gray-200 cursor-pointer">Data Privacy</li>  
+        </ul>  
+        <button className="mt-4 text-red-600">Log Out</button>  
       </div>  
-    );  
-  };  
 
-  export default ProfileSettings;
+      {/* Main Content */}  
+      <div className="flex-1 p-6">  
+        <h3 className="text-2xl font-semibold mb-4">Personal Info</h3>  
+        <div className="mb-4">  
+          <label className="block mb-2">First Name</label>  
+          <input type="text" className="border border-gray-300 p-2 rounded w-full" placeholder="Ahmad" />  
+        </div>  
+        <div className="mb-4">  
+          <label className="block mb-2">Email Address</label>  
+          <input type="email" className="border border-gray-300 p-2 rounded w-full" placeholder="ahmadsaris@gmail.com" />  
+        </div>  
+        <div className="mb-4">  
+          <label className="block mb-2">Phone Number</label>  
+          <input type="tel" className="border border-gray-300 p-2 rounded w-full" placeholder="+1 03203202" />  
+        </div>  
+        <button className="bg-purple-600 text-white px-4 py-2 rounded">Edit Details</button>  
+      </div>  
+    </div>  
+  );  
+};  
+
+export default ProfileSettings;
