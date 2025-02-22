@@ -11,6 +11,7 @@ import AdminUserManagement from "./pages/Admin/AdminUserManagement";
 import AdminVenueManagement from "./pages/Admin/AdminVenueManagement";
 import AdminPaymentManagement from "./pages/Admin/AdminPaymentManagement";
 import AdminAnalytics from "./pages/Admin/AdminAnalytics";
+import VenueDashboard from "./pages/Location Manager/VenueDashboard";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
               <Route path="payments" element={<AdminPaymentManagement />} />
               <Route path="analytics" element={<AdminAnalytics />} />
             </Route>
+            <Route path="/location-manager" element={<VenueDashboard />} />
           </Routes>
         </div>
       </div>
