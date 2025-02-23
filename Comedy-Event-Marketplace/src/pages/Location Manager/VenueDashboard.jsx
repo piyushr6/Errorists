@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Home, BarChart, Users, PlusCircle, LogOut, Plus, Trash2, Check, X } from 'lucide-react';
+import { Home, BarChart, Users, PlusCircle, LogOut, Plus, Trash2, Check } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 
-// Simplified VenueList component
+// VenueList component
 const VenueList = ({ venues, onToggleApproval, onDelete }) => (
    <div className="bg-white rounded-lg shadow">
       <div className="p-6">
@@ -37,7 +37,7 @@ const VenueList = ({ venues, onToggleApproval, onDelete }) => (
    </div>
 );
 
-// Simplified RevenueChart component
+// RevenueChart component
 const RevenueChart = () => {
    const data = [
       { name: 'Jan', revenue: 4000 },
@@ -65,7 +65,7 @@ const RevenueChart = () => {
    );
 };
 
-// Simplified Analytics component
+// Analytics component
 const Analytics = () => (
    <div className="bg-white p-6 rounded-lg shadow">
       <h2 className="text-xl font-semibold mb-4">Analytics Overview</h2>
@@ -86,7 +86,7 @@ const Analytics = () => (
    </div>
 );
 
-// Simplified ArtistRequests component
+// ArtistRequests component
 const ArtistRequests = () => (
    <div className="bg-white p-6 rounded-lg shadow">
       <h2 className="text-xl font-semibold mb-4">Artist Requests</h2>
@@ -110,7 +110,7 @@ const ArtistRequests = () => (
    </div>
 );
 
-// Simplified AddVenueForm component
+// AddVenueForm component
 const AddVenueForm = ({ onAddVenue, onCancel }) => {
    const [formData, setFormData] = useState({
       name: '',
@@ -127,14 +127,6 @@ const AddVenueForm = ({ onAddVenue, onCancel }) => {
          imageUrl: '/api/placeholder/400/300',
       });
    };
-
-   //signout 
-   const navigate = useNavigate();
-   
-   const handleSignOut = () => {
-      navigate('/');
-   };
-
 
    return (
       <div className="bg-white p-6 rounded-lg shadow">
@@ -215,6 +207,13 @@ const VenueDashboard = () => {
       }
    ]);
 
+   const navigate = useNavigate();
+
+   const handleSignOut = () => {
+      console.log('Signing out...');
+      navigate('/');
+   };
+
    const addVenue = (newVenue) => {
       setVenues([...venues, { ...newVenue, id: Date.now().toString(), isApproved: false }]);
       setActiveTab('dashboard');
@@ -234,12 +233,10 @@ const VenueDashboard = () => {
       switch (activeTab) {
          case 'dashboard':
             return (
-               <>
-                  <div className="grid grid-cols-1 gap-8">
-                     <RevenueChart />
-                     <VenueList venues={venues} onToggleApproval={toggleApproval} onDelete={deleteVenue} />
-                  </div>
-               </>
+               <div className="grid grid-cols-1 gap-8">
+                  <RevenueChart />
+                  <VenueList venues={venues} onToggleApproval={toggleApproval} onDelete={deleteVenue} />
+               </div>
             );
          case 'analytics':
             return <Analytics />;
@@ -260,9 +257,9 @@ const VenueDashboard = () => {
    return (
       <div className="flex min-h-screen bg-gray-50">
          {/* Sidebar */}
-         <div className="w-64 bg-white shadow-lg">
-            <div className="h-full flex flex-col p-5 space-y-6">
-               <h2 className="text-2xl font-bold text-gray-900">Venue Manager</h2>
+         <div className="w-64 bg-white shadow-lg flex flex-col min-h-screen">
+            <div className="p-5 flex-1">
+               <h2 className="text-2xl font-bold text-gray-900 mb-6">Venue Manager</h2>
                <nav className="flex flex-col space-y-4">
                   <button
                      className={`flex items-center p-3 rounded-md transition-colors ${activeTab === 'dashboard' ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-gray-100'
@@ -293,9 +290,11 @@ const VenueDashboard = () => {
                      <PlusCircle className="w-5 h-5 mr-2" /> Add Venue
                   </button>
                </nav>
+            </div>
+            <div className="p-5">
                <button
                   onClick={handleSignOut}
-                  className="mt-auto flex items-center p-3 bg-red-600 text-white rounded-md hover:bg-red-500 transition-colors"
+                  className="w-full flex items-center justify-center p-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
                >
                   <LogOut className="w-5 h-5 mr-2" /> Sign Out
                </button>
