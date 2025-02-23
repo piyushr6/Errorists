@@ -6,7 +6,7 @@ const ProfileSettings = ({ onClose }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "Ahmad",
-    lastName:"Abdulla",
+    lastName: "Abdulla",
     email: "ahmadsaris@gmail.com",
     phone: "+1 03203202",
   });
@@ -67,32 +67,28 @@ const ProfileSettings = ({ onClose }) => {
         <ul>
           <li
             onClick={() => handleSectionChange("personalInfo")}
-            className={`py-2 px-3 m-1 rounded cursor-pointer ${
-              currentSection === "personalInfo"
-                ? "bg-gray-300"
-                : "hover:bg-gray-300"
-            }`}
+            className={`py-2 px-3 m-1 rounded cursor-pointer ${currentSection === "personalInfo"
+              ? "bg-gray-300"
+              : "hover:bg-gray-300"
+              }`}
           >
             Edit Profile
           </li>
           <li
             onClick={() => handleSectionChange("passwordChange")}
-            className={`py-2 px-3  m-1 rounded cursor-pointer ${
-              currentSection === "passwordChange"
-                ? "bg-gray-300"
-                : "hover:bg-gray-300"
-            }`}
+            className={`py-2 px-3  m-1 rounded cursor-pointer ${currentSection === "passwordChange"
+              ? "bg-gray-300"
+              : "hover:bg-gray-300"
+              }`}
           >
-            Password
+            Change Password
           </li>
-          <li className="py-2 px-3  m-1 rounded hover:bg-gray-300 cursor-pointer">
-            Data Privacy
-          </li>
+
         </ul>
         <Link to="/">
           <button
             onClick={onClose}
-            className="mt-4 bg-red-300 hover:bg-red-400 text-white w-full px-4 py-2 rounded"
+            className="mt-4 bg-red-600 hover:bg-red-500 text-white w-full px-4 py-2 rounded"
           >
             Logout
           </button>
@@ -156,14 +152,14 @@ const ProfileSettings = ({ onClose }) => {
             {isEditing ? (
               <button
                 onClick={handleSaveClick}
-                className="bg-purple-600 text-white px-4 py-2 rounded"
+                className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded"
               >
                 Save Details
               </button>
             ) : (
               <button
                 onClick={handleEditClick}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
+                className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded"
               >
                 Edit Details
               </button>
@@ -175,9 +171,9 @@ const ProfileSettings = ({ onClose }) => {
             {!isCurrentPasswordValid ? (
               <button
                 onClick={handleChangePassword}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg"
               >
-                Change Password
+                Proceed
               </button>
             ) : (
               <>

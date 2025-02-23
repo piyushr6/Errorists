@@ -209,4 +209,280 @@ function ArtistDashboard() {
   );
 }
 
+
+// import React, { useState } from 'react';
+// import { motion } from 'framer-motion';
+// import { Bell, Calendar, DollarSign, Users, Star, MessageSquare, Settings, TrendingUp, BarChart2, Mail, X, Check } from 'lucide-react';
+
+// Reusable Components
+const NotificationPopover = ({ notifications, setNotifications, type }) => {
+  if (!notifications.length) return null;
+
+  return (
+    <div className="absolute top-12 right-0 w-80 bg-white rounded-lg shadow-lg p-4 z-50 border">
+      <h3 className="font-bold mb-3">{type === 'email' ? 'Messages' : 'Notifications'}</h3>
+      {notifications.map((notif, index) => (
+        <div key={index} className="mb-2 pb-2 border-b last:border-b-0">
+          <div className="flex justify-between items-start">
+            <p className="text-sm">{notif.message}</p>
+            <button
+              onClick={() => setNotifications(prev => prev.filter((_, i) => i !== index))}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          <p className="text-xs text-gray-500 mt-1">{notif.time}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const PageHeader = ({ title, subtitle }) => {
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showMessages, setShowMessages] = useState(false);
+  const [notifications, setNotifications] = useState([
+    { message: "New booking request from Jazz Club", time: "5 min ago" },
+    { message: "Payment received for last performance", time: "1 hour ago" },
+    { message: "Review posted by John D.", time: "2 hours ago" }
+  ]);
+  const [messages, setMessages] = useState([
+    { message: "Details for upcoming show", time: "10 min ago" },
+    { message: "Contract for review", time: "30 min ago" }
+  ]);
+
+  return (
+    <div className="flex justify-between items-center mb-8">
+      <div>
+        <h1 className="text-2xl font-bold mb-1">{title}</h1>
+        <p className="text-gray-600">{subtitle}</p>
+      </div>
+      <div className="flex items-center gap-4">
+        <div className="relative">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative"
+            onClick={() => {
+              setShowMessages(!showMessages);
+              setShowNotifications(false);
+            }}
+          >
+            <Mail className="w-6 h-6" />
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-white text-xs flex items-center justify-center">
+              {messages.length}
+            </span>
+          </motion.button>
+          {showMessages && (
+            <NotificationPopover
+              notifications={messages}
+              setNotifications={setMessages}
+              type="email"
+            />
+          )}
+        </div>
+        <div className="relative">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative"
+            onClick={() => {
+              setShowNotifications(!showNotifications);
+              setShowMessages(false);
+            }}
+          >
+            <Bell className="w-6 h-6" />
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+              {notifications.length}
+            </span>
+          </motion.button>
+          {showNotifications && (
+            <NotificationPopover
+              notifications={notifications}
+              setNotifications={setNotifications}
+              type="notification"
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const StatCard = ({ title, value, trend, trendValue }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    whileHover={{ scale: 1.02 }}
+    className="bg-white p-6 rounded-xl shadow-sm cursor-pointer"
+  >
+    <h3 className="text-gray-600 mb-2">{title}</h3>
+    <p className="text-3xl font-bold">{value}</p>
+    <div className={`flex items-center mt-2 ${trend >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+      <TrendingUp className="w-4 h-4 mr-1" />
+      <span>{`${trend >= 0 ? '+' : ''}${trendValue}`}</span>
+    </div>
+  </motion.div>
+);
+
+
+const ReviewsPage = () => {
+  const [reviews, setReviews] = useState([
+    { name: 'John D.', rating: 5, comment: "Incredible performance! The energy was amazing.", date: '2024-02-20', replied: false },
+    { name: 'Sarah M.', rating: 4, comment: "Great musical selection and atmosphere.", date: '2024-02-18', replied: false },
+    { name: 'Mike R.', rating: 5, comment: "One of the best shows I've seen this year!", date: '2024-02-15', replied: true }
+  ]);
+
+  const [replyText, setReplyText] = useState('');
+  const [activeReply, setActiveReply] = useState(null);
+
+  const handleReply = (index) => {
+    if (activeReply === index) {
+      setReviews(prev => prev.map((review, i) =>
+        i === index ? { ...review, replied: true } : review
+      ));
+      setActiveReply(null);
+      setReplyText('');
+    } else {
+      setActiveReply(index);
+    }
+  };
+
+  return (
+    <div className="p-8">
+      <PageHeader title="Performance Reviews" subtitle="See what your audience is saying" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <StatCard title="Average Rating" value="4.8" trend={1} trendValue="5% this month" />
+        <StatCard title="Total Reviews" value={reviews.length} trend={1} trendValue="15 new" />
+        <StatCard title="Response Rate" value="92%" trend={1} trendValue="3% this month" />
+      </div>
+      <div className="mt-8 space-y-6">
+        {reviews.map((review, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white p-6 rounded-xl shadow-sm"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center">
+                <h3 className="font-bold mr-2">{review.name}</h3>
+                <div className="flex">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+              </div>
+              <span className="text-gray-600">{review.date}</span>
+            </div>
+            <p className="text-gray-600 mb-4">{review.comment}</p>
+            <div className="flex justify-between items-center">
+              <button
+                onClick={() => handleReply(index)}
+                className={`px-4 py-2 rounded-lg transition-colors ${review.replied
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  }`}
+              >
+                {review.replied ? 'Replied' : 'Reply'}
+              </button>
+              <button
+                onClick={() => setReviews(prev => prev.filter((_, i) => i !== index))}
+                className="text-red-500 hover:text-red-700"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            {activeReply === index && (
+              <div className="mt-4">
+                <textarea
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  className="w-full p-2 border rounded-lg mb-2"
+                  placeholder="Write your reply..."
+                />
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={() => {
+                      setActiveReply(null);
+                      setReplyText('');
+                    }}
+                    className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handleReply(index)}
+                    className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
+                  >
+                    Send Reply
+                  </button>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// const MessagesPage = () => {
+//   const [messages, setMessages] = useState([
+//     { sender: 'Blue Note Jazz Club', subject: 'Upcoming Performance Details', date: '2024-02-22', unread: true },
+//     { sender: 'Booking Agent', subject: 'New Opportunity', date: '2024-02-21', unread: true },
+//     { sender: 'Fan Mail', subject: 'Great Show Last Night!', date: '2024-02-20', unread: false }
+//   ]);
+
+//   const handleMarkRead = (index) => {
+//     setMessages(prev => prev.map((msg, i) =>
+//       i === index ? { ...msg, unread: false } : msg
+//     ));
+//   };
+
+//   return (
+//     <div className="p-8">
+//       <PageHeader title="Messages" subtitle="Manage your communications" />
+//       <div className="bg-white rounded-xl shadow-sm">
+//         {messages.map((message, index) => (
+//           <motion.div
+//             key={index}
+//             initial={{ opacity: 0, y: 20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             className={`p-4 border-b last:border-b-0 flex items-center justify-between ${message.unread ? 'bg-indigo-50' : ''
+//               }`}
+//           >
+//             <div>
+//               <p className={`font-bold ${message.unread ? 'text-indigo-600' : ''}`}>{message.sender}</p>
+//               <p className="text-gray-600">{message.subject}</p>
+//             </div>
+//             <div className="flex items-center gap-4">
+//               <div className="text-right">
+//                 <p className="text-gray-600">{message.date}</p>
+//                 {message.unread && (
+//                   <button
+//                     onClick={() => handleMarkRead(index)}
+//                     className="inline-block px-2 py-1 text-xs bg-indigo-100 text-indigo-600 rounded-full hover:bg-indigo-200"
+//                   >
+//                     Mark as Read
+//                   </button>
+//                 )}
+//               </div>
+//               <button
+//                 onClick={() => setMessages(prev => prev.filter((_, i) => i !== index))}
+//                 className="text-red-500 hover:text-red-700"
+//               >
+//                 <X className="w-5 h-5" />
+//               </button>
+//             </div>
+//           </motion.div>
+//         ))}
+//         <motion.button
+//           whileHover={{ scale: 1.02 }}
+//           whileTap={{
+//             scale:
+
+
+
 export default ArtistDashboard;

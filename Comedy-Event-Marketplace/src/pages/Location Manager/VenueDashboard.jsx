@@ -8,6 +8,7 @@ import ArtistRequests from '../../components/Location Manager/ArtistRequests.jsx
 import NavbarLocationManager from '../../components/Location Manager/NavbarLocationManager.jsx'
 import AnalyticsPage from './AnalyticsPage.jsx'
 import { Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function VenueDashboard() {
    const [venues, setVenues] = useState([
@@ -43,6 +44,14 @@ function VenueDashboard() {
       setVenues(venues.filter((venue) => venue.id !== id));
    };
 
+
+   const navigate = useNavigate();
+   const handleSignOut = () => {
+
+      navigate('/'); // Navigate to the home page
+   };
+
+
    return (
 
       <div className="min-h-screen bg-gray-50">
@@ -61,7 +70,7 @@ function VenueDashboard() {
                      <Plus className="w-5 h-5 mr-2" />
                      Add New Venue
                   </button>
-                  <button className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500 transition-colors">
+                  <button onClick={handleSignOut} className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500 transition-colors">
                      Sign Out
                   </button>
                </div>

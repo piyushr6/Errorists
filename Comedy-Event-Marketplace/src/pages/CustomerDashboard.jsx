@@ -23,8 +23,8 @@ export default function CustomerDashboard() {
   const [isPricingOpen, setIsPricingOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [comedianIndex, setComedianIndex] = useState(0);
-  const [showSettings, setShowSettings] = useState(false); 
-  
+  const [showSettings, setShowSettings] = useState(false);
+
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
@@ -41,7 +41,7 @@ export default function CustomerDashboard() {
       prevIndex === 0 ? featuredComedians.length - 3 : prevIndex - 1
     );
   };
-  
+
   const handleComedianNext = () => {
     setComedianIndex((prevIndex) =>
       prevIndex === featuredComedians.length - 3 ? 0 : prevIndex + 1
@@ -49,7 +49,7 @@ export default function CustomerDashboard() {
   };
 
 
-  
+
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -337,19 +337,6 @@ export default function CustomerDashboard() {
 
         {/* Navigation Links */}
         <nav className="px-6 mt-6 space-y-4">
-          <a href="#events" className="block text-lg hover:text-purple-300">
-            Events
-          </a>
-          <a href="#comedians" className="block text-lg hover:text-purple-300">
-            Comedians
-          </a>
-          <a href="#venues" className="block text-lg hover:text-purple-300">
-            Venues
-          </a>
-          <a href="#blog" className="block text-lg hover:text-purple-300 5">
-            Blog
-          </a>
-
           {/* Buy Premium Button */}
           <button
             onClick={() => setIsPricingOpen(true)}
@@ -364,10 +351,10 @@ export default function CustomerDashboard() {
 
         {/* Profile & Settings at Bottom */}
         <div className="mt-auto px-6 py-4 space-y-4">
-          
-          <button 
-          onClick={()=>setShowSettings((prev)=>!prev)}
-          className="flex items-center w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full font-semibold text-white">
+
+          <button
+            onClick={() => setShowSettings((prev) => !prev)}
+            className="flex items-center w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full font-semibold text-white">
             <Settings className="w-5 h-5 mr-2" />
             Settings
           </button>
@@ -465,36 +452,36 @@ export default function CustomerDashboard() {
 
           {/* Featured Comedians */}
           <section className="py-8 relative">
-  <h2 className="text-3xl font-bold mb-6">Featured Comedians</h2>
-  
-  <div className="relative overflow-hidden">
-    <div
-      className="flex transition-transform duration-500"
-      style={{ transform: `translateX(-${comedianIndex * 33.33}%)` }}
-    >
-      {featuredComedians.map((comedian) => (
-        <div key={comedian.id} className="w-1/3 flex-shrink-0 p-2">
-          <ComedianCard comedian={comedian} />
-        </div>
-      ))}
-    </div>
+            <h2 className="text-3xl font-bold mb-6">Featured Comedians</h2>
 
-    {/* Carousel Buttons */}
-    <button
-      onClick={handleComedianPrev}
-      className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-lg hover:bg-purple-700 transition z-10"
-    >
-      <ChevronLeft />
-    </button>
+            <div className="relative overflow-hidden">
+              <div
+                className="flex transition-transform duration-500"
+                style={{ transform: `translateX(-${comedianIndex * 33.33}%)` }}
+              >
+                {featuredComedians.map((comedian) => (
+                  <div key={comedian.id} className="w-1/3 flex-shrink-0 p-2">
+                    <ComedianCard comedian={comedian} />
+                  </div>
+                ))}
+              </div>
 
-    <button
-      onClick={handleComedianNext}
-      className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-lg hover:bg-purple-700 transition z-10"
-    >
-      <ChevronRight />
-    </button>
-  </div>
-</section>
+              {/* Carousel Buttons */}
+              <button
+                onClick={handleComedianPrev}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-lg hover:bg-purple-700 transition z-10"
+              >
+                <ChevronLeft />
+              </button>
+
+              <button
+                onClick={handleComedianNext}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple-600 text-white p-3 rounded-full shadow-lg hover:bg-purple-700 transition z-10"
+              >
+                <ChevronRight />
+              </button>
+            </div>
+          </section>
 
           <section className="py-16 bg-gradient-to-r from-purple-800 to-indigo-900 text-white">
             <div className="container mx-auto px-6">
