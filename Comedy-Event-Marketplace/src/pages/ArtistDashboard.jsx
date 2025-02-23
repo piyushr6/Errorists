@@ -1,488 +1,563 @@
-import React, { useState, useEffect } from 'react';
-import StatsCard from '../components/StatsCard';
-import Sidebar from '../components/SideBar';
-import EventCard from '../components/EventCard';
+import React, { useState } from "react";
 import {
-  Calendar,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import {
+  Home,
+  Video,
   DollarSign,
+  BarChart2,
+  AlertCircle,
+  MessageSquare,
   Users,
-  Star,
-  Bell,
-  Menu,
-} from 'lucide-react';
+  Search,
+  Filter,
+} from "lucide-react";
 
-function ArtistDashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [notifications, setNotifications] = useState(3);
+const DeleteConfirmationModal = ({ isOpen, user, onClose, onConfirm }) => {
+  if (!isOpen) return null;
 
-  const events = [
-    {
-      date: '15 Mar',
-      venue: 'The Comedy Club, Mumbai',
-      time: '8:00 PM',
-      location: 'Mumbai, Maharashtra',
-      status: 'Confirmed',
-      capacity: 200,
-      payment: 5000,
-      image: 'https://images.pexels.com/photos/3893788/pexels-photo-3893788.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      date: '18 Mar',
-      venue: 'Laugh Riot, Delhi',
-      time: '9:30 PM',
-      location: 'Delhi, Delhi',
-      status: 'Pending',
-      capacity: 150,
-      payment: 4000,
-      image: 'https://images.pexels.com/photos/789750/pexels-photo-789750.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      date: '22 Mar',
-      venue: 'Improv Club, Bangalore',
-      time: '7:00 PM',
-      location: 'Bangalore, Karnataka',
-      status: 'Confirmed',
-      capacity: 180,
-      payment: 4500,
-      image: 'https://images.pexels.com/photos/15105039/pexels-photo-15105039/free-photo-of-cityscape-at-clear-night.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      date: '25 Mar',
-      venue: 'The Biere Club, Pune',
-      time: '10:00 PM',
-      location: 'Pune, Maharashtra',
-      status: 'Confirmed',
-      capacity: 250,
-      payment: 6000,
-      image: 'https://images.pexels.com/photos/1415764/pexels-photo-1415764.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
+  return (
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-lg font-semibold mb-4">Delete User</h3>
+        <p>Are you sure you want to delete {user?.name}?</p>
+        <div className="flex justify-end mt-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            className="bg-red-600 text-white px-4 py-2 rounded"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+// Modal Component
+const EditUserModal = ({ isOpen, user, onClose, onSave }) => {
+  const [name, setName] = useState(user?.name || "");
+  const [email, setEmail] = useState(user?.email || "");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave({ ...user, name, email });
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-lg font-semibold mb-4">Edit User</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="border px-3 py-2 rounded w-full"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border px-3 py-2 rounded w-full"
+              required
+            />
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={onClose}
+              className="bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="bg-indigo-600 text-white px-4 py-2 rounded"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+// User Management Page Component
+const UserManagement = () => {
+  const [users, setUsers] = useState([
+    { id: 1, name: "User One", email: "user1@example.com" },
+    { id: 2, name: "User Two", email: "user2@example.com" },
+    { id: 3, name: "User Three", email: "user3@example.com" },
+  ]);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const handleEdit = (user) => {
+    setSelectedUser(user);
+    setModalOpen(true);
+  };
+
+  const handleSave = (updatedUser) => {
+    setUsers(users.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
+  };
+
+  const handleDelete = (user) => {
+    setSelectedUser(user);
+    setDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    setUsers(users.filter((user) => user.id !== selectedUser.id));
+    setDeleteModalOpen(false); // Close delete modal after confirming delete
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModalOpen(false);
+  };
+
+  const userTypes = [
+    { label: "Venue Owners", count: 245, trend: "+12%" },
+    { label: "Artists", count: 1023, trend: "+8%" },
+    { label: "Customers", count: 23315, trend: "+15%" },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="lg:hidden fixed top-4 left-4 z-40">
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="p-2 rounded-lg bg-white shadow-md hover:bg-gray-50"
-        >
-          <Menu size={24} />
-        </button>
+    <div className="p-6 space-y-6">
+      <h2 className="text-3xl font-bold mb-6">User Management</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        {userTypes.map((type, idx) => (
+          <Card
+            key={idx}
+            className="transition-all duration-300 hover:shadow-lg"
+          >
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold mb-2">{type.label}</h3>
+              <div className="flex items-center justify-between">
+                <span className="text-3xl font-bold">{type.count}</span>
+                <span className="text-green-500">{type.trend}</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      <div className="flex">
-        <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
-
-        <main className="flex-1 p-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Welcome back, Alex!</h1>
-                <p className="text-gray-500 mt-1">Here's what's happening with your events.</p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <button className="relative p-2 rounded-xl hover:bg-gray-100">
-                  <Bell size={24} className="text-gray-600" />
-                  {notifications > 0 && (
-                    <span className="absolute top-0 right-0 transform translate-x-1 -translate-y-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                      {notifications}
-                    </span>
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <StatsCard
-                icon={<Calendar size={24} />}
-                label="Upcoming Shows"
-                value="12"
-                trend="8"
+      <Card>
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <CardTitle>User Activity</CardTitle>
+            <div className="flex space-x-2">
+              <input
+                type="text"
+                placeholder="Search users..."
+                className="px-4 py-2 border rounded-lg"
               />
-              <StatsCard
-                icon={<DollarSign size={24} />}
-                label="Monthly Revenue"
-                value="$3,240"
-                trend="12"
-              />
-              <StatsCard
-                icon={<Users size={24} />}
-                label="Total Audience"
-                value="1,234"
-                trend="24"
-              />
-              <StatsCard
-                icon={<Star size={24} />}
-                label="Avg. Rating"
-                value="4.8"
-                trend="5"
-              />
-            </div>
-
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900">Upcoming Events</h2>
-                <button className="text-indigo-600 hover:text-indigo-700 font-medium">
-                  View All
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {events.map((event, index) => (
-                  <div key={index} className="bg-white rounded-2xl border border-gray-100 p-4 shadow">
-                    {/* Image at the top */}
-                    <img
-                      src={event.image}
-                      alt={event.venue}
-                      className="w-full h-40 object-cover rounded-lg mb-4"
-                    />
-                    {/* Venue Name Below the Image */}
-                    <h2 className="text-lg font-semibold text-gray-900">{event.venue}</h2>
-                    {/* Date & Time */}
-                    <p className="text-gray-500 text-sm">{event.date} • {event.time}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Recent Reviews</h2>
-                <div className="space-y-4">
-                  {[
-                    {
-                      name: "Rohan Sharma",
-                      img: "https://images.unsplash.com/photo-1591084728795-1149f32d9866?w=256&h=256&q=80",
-                      review: "Absolutely hilarious performance! Can't wait to see you again."
-                    },
-                    {
-                      name: "Priya Upadhyay",
-                      img: "https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=1200",
-                      review: "Brilliant show! Laughed non-stop. Looking forward to more!"
-                    }
-                  ].map((reviewer, index) => (
-                    <div key={index} className="flex items-start space-x-4 pb-4 border-b border-gray-100 last:border-0">
-                      <img
-                        src={reviewer.img}
-                        alt={reviewer.name}
-                        className="w-10 h-10 rounded-xl"
-                      />
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <h3 className="font-medium text-gray-900">{reviewer.name}</h3>
-                          <div className="flex items-center text-yellow-400">
-                            {[...Array(5)].map((_, i) => (
-                              <Star key={i} size={14} fill="currentColor" />
-                            ))}
-                          </div>
-                        </div>
-                        <p className="text-gray-500 text-sm mt-1">{reviewer.review}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-
-              <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Performance Analytics</h2>
-                <div className="space-y-4">
-                  {['Ticket Sales', 'Audience Growth', 'Revenue'].map((metric, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-gray-900">{metric}</p>
-                        <div className="flex items-center space-x-2 text-sm">
-                          <span className="text-green-600">+12%</span>
-                          <span className="text-gray-500">vs last month</span>
-                        </div>
-                      </div>
-                      <div className="w-24 h-12 bg-gray-50 rounded-lg"></div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <select className="px-4 py-2 border rounded-lg">
+                <option>All Users</option>
+                <option>Venue Owners</option>
+                <option>Artists</option>
+                <option>Customers</option>
+              </select>
             </div>
           </div>
-        </main>
-      </div >
-    </div >
-  );
-}
-
-
-// import React, { useState } from 'react';
-// import { motion } from 'framer-motion';
-// import { Bell, Calendar, DollarSign, Users, Star, MessageSquare, Settings, TrendingUp, BarChart2, Mail, X, Check } from 'lucide-react';
-
-// Reusable Components
-const NotificationPopover = ({ notifications, setNotifications, type }) => {
-  if (!notifications.length) return null;
-
-  return (
-    <div className="absolute top-12 right-0 w-80 bg-white rounded-lg shadow-lg p-4 z-50 border">
-      <h3 className="font-bold mb-3">{type === 'email' ? 'Messages' : 'Notifications'}</h3>
-      {notifications.map((notif, index) => (
-        <div key={index} className="mb-2 pb-2 border-b last:border-b-0">
-          <div className="flex justify-between items-start">
-            <p className="text-sm">{notif.message}</p>
-            <button
-              onClick={() => setNotifications(prev => prev.filter((_, i) => i !== index))}
-              className="text-gray-400 hover:text-gray-600"
-            >
-              <X className="w-4 h-4" />
-            </button>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {users.map((user) => (
+              <div
+                key={user.id}
+                className="p-4 bg-gray-50 rounded-lg flex justify-between items-center"
+              >
+                <div>
+                  <h4 className="font-semibold">{user.name}</h4>
+                  <p className="text-sm text-gray-500">{user.email}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    className="px-3 py-1 bg-indigo-600 text-white rounded-md"
+                    onClick={() => handleEdit(user)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="px-3 py-1 bg-red-600 text-white rounded-md"
+                    onClick={() => handleDelete(user)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-          <p className="text-xs text-gray-500 mt-1">{notif.time}</p>
-        </div>
-      ))}
+        </CardContent>
+      </Card>
+
+      {/* Edit User Modal */}
+      <EditUserModal
+        isOpen={isModalOpen}
+        user={selectedUser}
+        onClose={() => setModalOpen(false)}
+        onSave={handleSave}
+      />
+
+      <DeleteConfirmationModal
+        isOpen={isDeleteModalOpen}
+        user={selectedUser}
+        onClose={handleDeleteCancel}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 };
 
-const PageHeader = ({ title, subtitle }) => {
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showMessages, setShowMessages] = useState(false);
-  const [notifications, setNotifications] = useState([
-    { message: "New booking request from Jazz Club", time: "5 min ago" },
-    { message: "Payment received for last performance", time: "1 hour ago" },
-    { message: "Review posted by John D.", time: "2 hours ago" }
-  ]);
-  const [messages, setMessages] = useState([
-    { message: "Details for upcoming show", time: "10 min ago" },
-    { message: "Contract for review", time: "30 min ago" }
-  ]);
+// Event Approvals Page Component
 
-  return (
-    <div className="flex justify-between items-center mb-8">
-      <div>
-        <h1 className="text-2xl font-bold mb-1">{title}</h1>
-        <p className="text-gray-600">{subtitle}</p>
-      </div>
-      <div className="flex items-center gap-4">
-        <div className="relative">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="relative"
-            onClick={() => {
-              setShowMessages(!showMessages);
-              setShowNotifications(false);
-            }}
-          >
-            <Mail className="w-6 h-6" />
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-white text-xs flex items-center justify-center">
-              {messages.length}
-            </span>
-          </motion.button>
-          {showMessages && (
-            <NotificationPopover
-              notifications={messages}
-              setNotifications={setMessages}
-              type="email"
-            />
-          )}
-        </div>
-        <div className="relative">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="relative"
-            onClick={() => {
-              setShowNotifications(!showNotifications);
-              setShowMessages(false);
-            }}
-          >
-            <Bell className="w-6 h-6" />
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
-              {notifications.length}
-            </span>
-          </motion.button>
-          {showNotifications && (
-            <NotificationPopover
-              notifications={notifications}
-              setNotifications={setNotifications}
-              type="notification"
-            />
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+const EventApprovals = () => {
+  const initialEvents = [
+    {
+      name: "Jazz Night",
+      venue: "Blue Note",
+      status: "pending",
+      date: "2024-03-01",
+    },
+    {
+      name: "Rock Concert",
+      venue: "Madison Square",
+      status: "pending",
+      date: "2024-03-15",
+    },
+    {
+      name: "Classical Evening",
+      venue: "Symphony Hall",
+      status: "pending",
+      date: "2024-03-20",
+    },
+  ];
 
-const StatCard = ({ title, value, trend, trendValue }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    whileHover={{ scale: 1.02 }}
-    className="bg-white p-6 rounded-xl shadow-sm cursor-pointer"
-  >
-    <h3 className="text-gray-600 mb-2">{title}</h3>
-    <p className="text-3xl font-bold">{value}</p>
-    <div className={`flex items-center mt-2 ${trend >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-      <TrendingUp className="w-4 h-4 mr-1" />
-      <span>{`${trend >= 0 ? '+' : ''}${trendValue}`}</span>
-    </div>
-  </motion.div>
-);
+  const [events, setEvents] = useState(initialEvents);
 
+  const handleApprove = (index) => {
+    const updatedEvents = [...events];
+    updatedEvents[index].status = "approved"; // Change the status to approved
+    setEvents(updatedEvents); // Update the state
+  };
 
-const ReviewsPage = () => {
-  const [reviews, setReviews] = useState([
-    { name: 'John D.', rating: 5, comment: "Incredible performance! The energy was amazing.", date: '2024-02-20', replied: false },
-    { name: 'Sarah M.', rating: 4, comment: "Great musical selection and atmosphere.", date: '2024-02-18', replied: false },
-    { name: 'Mike R.', rating: 5, comment: "One of the best shows I've seen this year!", date: '2024-02-15', replied: true }
-  ]);
-
-  const [replyText, setReplyText] = useState('');
-  const [activeReply, setActiveReply] = useState(null);
-
-  const handleReply = (index) => {
-    if (activeReply === index) {
-      setReviews(prev => prev.map((review, i) =>
-        i === index ? { ...review, replied: true } : review
-      ));
-      setActiveReply(null);
-      setReplyText('');
-    } else {
-      setActiveReply(index);
-    }
+  const handleReject = (index) => {
+    const updatedEvents = [...events];
+    updatedEvents[index].status = "rejected"; // Change the status to rejected
+    setEvents(updatedEvents); // Update the state
   };
 
   return (
-    <div className="p-8">
-      <PageHeader title="Performance Reviews" subtitle="See what your audience is saying" />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <StatCard title="Average Rating" value="4.8" trend={1} trendValue="5% this month" />
-        <StatCard title="Total Reviews" value={reviews.length} trend={1} trendValue="15 new" />
-        <StatCard title="Response Rate" value="92%" trend={1} trendValue="3% this month" />
-      </div>
-      <div className="mt-8 space-y-6">
-        {reviews.map((review, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white p-6 rounded-xl shadow-sm"
+    <div className="p-6 space-y-6">
+      <h2 className="text-3xl font-bold mb-6">Event Approvals</h2>
+      <Card>
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            {events.map((event, idx) => (
+              <div
+                key={idx}
+                className={`p-4 rounded-lg flex justify-between items-center ${
+                  event.status === "approved"
+                    ? "bg-green-100"
+                    : event.status === "rejected"
+                    ? "bg-red-100"
+                    : "bg-gray-50"
+                }`}
+              >
+                <div>
+                  <h4 className="font-semibold">{event.name}</h4>
+                  <p className="text-sm text-gray-500">
+                    {event.venue} - {event.date}
+                  </p>
+                </div>
+                <div className="flex space-x-2">
+                  {event.status === "pending" ? (
+                    <>
+                      <button
+                        className="px-3 py-1 bg-green-600 text-white rounded-md"
+                        onClick={() => handleApprove(idx)}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="px-3 py-1 bg-red-600 text-white rounded-md"
+                        onClick={() => handleReject(idx)}
+                      >
+                        Reject
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className={`px-3 py-1 ${
+                        event.status === "approved"
+                          ? "bg-green-300"
+                          : "bg-red-300"
+                      } text-white rounded-md`}
+                      disabled
+                    >
+                      {event.status.charAt(0).toUpperCase() +
+                        event.status.slice(1)}
+                      d
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+// Payments & Revenue Page Component
+const PaymentsRevenue = () => {
+  const stats = [
+    { label: "Total Revenue", value: "$1,234,567", trend: "+12%" },
+    { label: "Monthly Revenue", value: "$123,456", trend: "+8%" },
+    { label: "Average Transaction", value: "$85", trend: "+5%" },
+    { label: "Pending Payouts", value: "$34,567", trend: "-" },
+  ];
+
+  return (
+    <div className="p-6 space-y-6">
+      <h2 className="text-3xl font-bold mb-6">Payments & Revenue</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map((stat, idx) => (
+          <Card
+            key={idx}
+            className="transition-all duration-300 hover:shadow-lg"
           >
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center">
-                <h3 className="font-bold mr-2">{review.name}</h3>
-                <div className="flex">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                  ))}
-                </div>
+            <CardContent className="p-6">
+              <h3 className="text-gray-500 mb-2">{stat.label}</h3>
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-bold">{stat.value}</span>
+                <span className="text-green-500">{stat.trend}</span>
               </div>
-              <span className="text-gray-600">{review.date}</span>
-            </div>
-            <p className="text-gray-600 mb-4">{review.comment}</p>
-            <div className="flex justify-between items-center">
-              <button
-                onClick={() => handleReply(index)}
-                className={`px-4 py-2 rounded-lg transition-colors ${review.replied
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-indigo-600 text-white hover:bg-indigo-700'
-                  }`}
-              >
-                {review.replied ? 'Replied' : 'Reply'}
-              </button>
-              <button
-                onClick={() => setReviews(prev => prev.filter((_, i) => i !== index))}
-                className="text-red-500 hover:text-red-700"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            {activeReply === index && (
-              <div className="mt-4">
-                <textarea
-                  value={replyText}
-                  onChange={(e) => setReplyText(e.target.value)}
-                  className="w-full p-2 border rounded-lg mb-2"
-                  placeholder="Write your reply..."
-                />
-                <div className="flex justify-end gap-2">
-                  <button
-                    onClick={() => {
-                      setActiveReply(null);
-                      setReplyText('');
-                    }}
-                    className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={() => handleReply(index)}
-                    className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
-                  >
-                    Send Reply
-                  </button>
-                </div>
-              </div>
-            )}
-          </motion.div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>
   );
 };
 
-// const MessagesPage = () => {
-//   const [messages, setMessages] = useState([
-//     { sender: 'Blue Note Jazz Club', subject: 'Upcoming Performance Details', date: '2024-02-22', unread: true },
-//     { sender: 'Booking Agent', subject: 'New Opportunity', date: '2024-02-21', unread: true },
-//     { sender: 'Fan Mail', subject: 'Great Show Last Night!', date: '2024-02-20', unread: false }
-//   ]);
+// Platform Analytics Page Component
+const PlatformAnalytics = () => {
+  const metrics = [
+    { label: "Active Users", value: "24.5K", trend: "+15%" },
+    { label: "Event Bookings", value: "1.2K", trend: "+8%" },
+    { label: "Average Rating", value: "4.8", trend: "+0.2" },
+    { label: "User Retention", value: "92%", trend: "+3%" },
+  ];
 
-//   const handleMarkRead = (index) => {
-//     setMessages(prev => prev.map((msg, i) =>
-//       i === index ? { ...msg, unread: false } : msg
-//     ));
-//   };
+  return (
+    <div className="p-6 space-y-6">
+      <h2 className="text-3xl font-bold mb-6">Platform Analytics</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {metrics.map((metric, idx) => (
+          <Card
+            key={idx}
+            className="transition-all duration-300 hover:shadow-lg"
+          >
+            <CardContent className="p-6">
+              <h3 className="text-gray-500 mb-2">{metric.label}</h3>
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-bold">{metric.value}</span>
+                <span className="text-green-500">{metric.trend}</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-//   return (
-//     <div className="p-8">
-//       <PageHeader title="Messages" subtitle="Manage your communications" />
-//       <div className="bg-white rounded-xl shadow-sm">
-//         {messages.map((message, index) => (
-//           <motion.div
-//             key={index}
-//             initial={{ opacity: 0, y: 20 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             className={`p-4 border-b last:border-b-0 flex items-center justify-between ${message.unread ? 'bg-indigo-50' : ''
-//               }`}
-//           >
-//             <div>
-//               <p className={`font-bold ${message.unread ? 'text-indigo-600' : ''}`}>{message.sender}</p>
-//               <p className="text-gray-600">{message.subject}</p>
-//             </div>
-//             <div className="flex items-center gap-4">
-//               <div className="text-right">
-//                 <p className="text-gray-600">{message.date}</p>
-//                 {message.unread && (
-//                   <button
-//                     onClick={() => handleMarkRead(index)}
-//                     className="inline-block px-2 py-1 text-xs bg-indigo-100 text-indigo-600 rounded-full hover:bg-indigo-200"
-//                   >
-//                     Mark as Read
-//                   </button>
-//                 )}
-//               </div>
-//               <button
-//                 onClick={() => setMessages(prev => prev.filter((_, i) => i !== index))}
-//                 className="text-red-500 hover:text-red-700"
-//               >
-//                 <X className="w-5 h-5" />
-//               </button>
-//             </div>
-//           </motion.div>
-//         ))}
-//         <motion.button
-//           whileHover={{ scale: 1.02 }}
-//           whileTap={{
-//             scale:
+// Reports & Complaints Page Component
+const ReportsComplaints = () => {
+  const reports = [
+    { type: "Technical Issue", priority: "High", status: "Open", count: 5 },
+    { type: "Payment Dispute", priority: "Medium", status: "Open", count: 3 },
+    { type: "User Complaint", priority: "Low", status: "Open", count: 8 },
+  ];
 
+  return (
+    <div className="p-6 space-y-6">
+      <h2 className="text-3xl font-bold mb-6">Reports & Complaints</h2>
+      <Card>
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            {reports.map((report, idx) => (
+              <div
+                key={idx}
+                className="p-4 bg-gray-50 rounded-lg flex justify-between items-center"
+              >
+                <div>
+                  <h4 className="font-semibold">{report.type}</h4>
+                  <p className="text-sm text-gray-500">
+                    Priority: {report.priority}
+                  </p>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <span className="text-xl font-bold">{report.count}</span>
+                  <button className="px-3 py-1 bg-indigo-600 text-white rounded-md">
+                    View
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
+// Marketing & Promotions Page Component
+const MarketingPromotions = () => {
+  const campaigns = [
+    {
+      name: "Summer Festival",
+      status: "Active",
+      reach: "50K",
+      engagement: "12%",
+    },
+    {
+      name: "New Year Events",
+      status: "Scheduled",
+      reach: "75K",
+      engagement: "15%",
+    },
+    { name: "Local Artists", status: "Draft", reach: "30K", engagement: "8%" },
+  ];
 
-export default ArtistDashboard;
+  return (
+    <div className="p-6 space-y-6">
+      <h2 className="text-3xl font-bold mb-6">Marketing & Promotions</h2>
+      <Card>
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            {campaigns.map((campaign, idx) => (
+              <div key={idx} className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold">{campaign.name}</h3>
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      campaign.status === "Active"
+                        ? "bg-green-100 text-green-800"
+                        : campaign.status === "Scheduled"
+                        ? "bg-blue-100 text-blue-800"
+                        : "bg-gray-100 text-gray-800"
+                    }`}
+                  >
+                    {campaign.status}
+                  </span>
+                </div>
+                <div className="mt-2 flex space-x-4 text-sm text-gray-500">
+                  <span>Reach: {campaign.reach}</span>
+                  <span>Engagement: {campaign.engagement}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+// Main Layout Component
+const AdminLayout = () => {
+  const [currentPage, setCurrentPage] = useState("users");
+
+  const pages = {
+    users: { component: UserManagement, icon: Home, label: "User Management" },
+    events: {
+      component: EventApprovals,
+      icon: Video,
+      label: "Event Approvals",
+    },
+    payments: {
+      component: PaymentsRevenue,
+      icon: DollarSign,
+      label: "Payments & Revenue",
+    },
+    analytics: {
+      component: PlatformAnalytics,
+      icon: BarChart2,
+      label: "Platform Analytics",
+    },
+    reports: {
+      component: ReportsComplaints,
+      icon: AlertCircle,
+      label: "Reports & Complaints",
+    },
+    marketing: {
+      component: MarketingPromotions,
+      icon: MessageSquare,
+      label: "Marketing & Promotions",
+    },
+  };
+
+  const CurrentPageComponent = pages[currentPage].component;
+
+  return (
+    <div className="flex h-screen bg-gray-50">
+      {/* Sidebar */}
+      <aside className="w-64 bg-white border-r border-gray-200 p-4">
+        <div className="text-2xl font-bold text-indigo-600 mb-8 px-4">
+          Admin
+        </div>
+        <nav className="space-y-2">
+          {Object.entries(pages).map(([key, { icon: Icon, label }]) => (
+            <button
+              key={key}
+              onClick={() => setCurrentPage(key)}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                currentPage === key
+                  ? "bg-indigo-50 text-indigo-600"
+                  : "text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              <Icon className="w-5 h-5" />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
+      </aside>
+
+      {/* Main content */}
+      <div className="flex-1 overflow-auto">
+        <div className="transition-all duration-300 ease-in-out">
+          <CurrentPageComponent />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminLayout;
