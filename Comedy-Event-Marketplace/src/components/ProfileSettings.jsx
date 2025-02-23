@@ -5,10 +5,10 @@ const ProfileSettings = ({ onClose }) => {
   const [currentSection, setCurrentSection] = useState("personalInfo");
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "Ahmad",
-    lastName: "Abdulla",
-    email: "ahmadsaris@gmail.com",
-    phone: "+1 03203202",
+    firstName: "Aditya",
+    lastName: "Sharma",
+    email: "adityas@gmail.com",
+    phone: "+91 9787324610",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPasswordInput, setCurrentPasswordInput] = useState("");

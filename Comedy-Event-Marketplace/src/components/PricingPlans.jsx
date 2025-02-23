@@ -65,7 +65,7 @@ export default function PricingPlans({ onClose }) {
             {/* Monthly Subscription */}
             <div className="pricing pricing-2 border-4 rounded-lg p-6 text-center text-white bg-gradient-to-r from-purple-500 to-purple-800">
               <h3 className="text-xl font-semibold mb-2">Monthly Subscription</h3>
-              <p className="text-3xl font-bold">₹4.99<span className="text-lg">/Month</span></p>
+              <p className="text-3xl font-bold">₹49<span className="text-lg">/Month</span></p>
               <ul className="text-left space-y-2 my-6">
                 <li>✅ Streaming in high quality</li>
                 <li>✅ Best audio quality</li>
@@ -79,7 +79,7 @@ export default function PricingPlans({ onClose }) {
             {/* Yearly Subscription */}
             <div className="pricing border rounded-lg p-6 text-center bg-gray-200">
               <h3 className="text-xl font-semibold mb-2">Yearly Subscription</h3>
-              <p className="text-3xl font-bold">$49.99<span className="text-lg">/Year</span></p>
+              <p className="text-3xl font-bold">₹449<span className="text-lg">/Year</span></p>
               <ul className="text-left space-y-2 my-6">
                 <li>✅ Streaming in high quality</li>
                 <li>✅ Best audio quality</li>
