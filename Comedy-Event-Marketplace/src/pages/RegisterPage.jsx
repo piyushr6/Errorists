@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaChevronDown, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { USERS } from "../components/User.jsx";
 
 const RegisterPage = () => {
   const [dob, setDob] = useState("");
@@ -16,7 +17,10 @@ const RegisterPage = () => {
     let calculatedAge = today.getFullYear() - birthDate.getFullYear();
     const monthDifference = today.getMonth() - birthDate.getMonth();
 
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
       calculatedAge--;
     }
     return calculatedAge;
@@ -32,7 +36,19 @@ const RegisterPage = () => {
     }
   };
 
-  const roles = ["Customer", "Admin", "Artist", "Location Manager"];
+  function handleSubmit(e) {
+    e.preventDefault();
+    const userObject = {
+      ...formData,
+      dob,
+      age,
+      role,
+    };
+    console.log("Registered User:", userObject);
+    USERS.push(userObject);
+    console.log(push)
+  }
+  const roles = ["Admin", "Artist", "Location Manager"];
 
   const handleRoleSelect = (selectedRole) => {
     setRole(selectedRole);
@@ -58,16 +74,29 @@ const RegisterPage = () => {
       </div>
 
       {/* Right Section - Registration Form */}
-      <div className="w-1/2 flex justify-center items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="w-1/2 flex justify-center items-center"
+      >
         <div className="w-full max-w-md register-wrapper">
-          <h2 className="text-2xl font-bold text-gray-800">Create your account</h2>
+          <h2 className="text-2xl font-bold text-gray-800">
+            Create your account
+          </h2>
 
           {/* Registration Form */}
           <div className="mt-6 space-y-4">
             {/* Name Fields */}
             <div className="flex gap-4">
-              <input type="text" placeholder="First Name" className="w-1/2 border rounded-lg px-4 py-2" />
-              <input type="text" placeholder="Last Name" className="w-1/2 border rounded-lg px-4 py-2" />
+              <input
+                type="text"
+                placeholder="First Name"
+                className="fiirst w-1/2 border rounded-lg px-4 py-2"
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="last w-1/2 border rounded-lg px-4 py-2"
+              />
             </div>
 
             {/* DOB and Age */}
@@ -75,19 +104,23 @@ const RegisterPage = () => {
               type="date"
               value={dob}
               onChange={handleDobChange}
-              className="w-full border rounded-lg px-4 py-2"
+              className=" dob w-full border rounded-lg px-4 py-2"
             />
             {age && <p className="text-sm text-gray-600">Your Age: {age}</p>}
 
             {/* Email */}
-            <input type="email" placeholder="Email" className="w-full border rounded-lg px-4 py-2" />
+            <input
+              type="email"
+              placeholder="Email"
+              className="email w-full border rounded-lg px-4 py-2"
+            />
 
             {/* Password Fields with Eye Icon */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                className="w-full border rounded-lg px-4 py-2"
+                className="password w-full border rounded-lg px-4 py-2"
               />
               <button
                 onClick={() => setShowPassword((prev) => !prev)}
@@ -116,7 +149,10 @@ const RegisterPage = () => {
             {/* Role Selection - Custom Dropdown */}
             <div className="relative">
               <button
-                onClick={() => setShowDropdown((prev) => !prev)}
+                onClick={(e) => {
+                  e.preventDefault(); // Prevents form submission
+                  setShowDropdown((prev) => !prev);
+                }}
                 className="w-full bg-white border rounded-lg px-4 py-2 text-left cursor-pointer flex items-center justify-between focus:outline-none"
               >
                 {role || "Select Role"}
@@ -131,7 +167,11 @@ const RegisterPage = () => {
                       key={r}
                       onClick={() => handleRoleSelect(r)}
                       className={`px-4 py-2 cursor-pointer hover:bg-purple-600 hover:text-white ${
-                        index === 0 ? "rounded-t-lg" : index === roles.length - 1 ? "rounded-b-lg" : ""
+                        index === 0
+                          ? "rounded-t-lg"
+                          : index === roles.length - 1
+                          ? "rounded-b-lg"
+                          : ""
                       }`}
                     >
                       {r}
@@ -143,11 +183,13 @@ const RegisterPage = () => {
 
             {/* Register Button */}
             <Link to="/">
-              <button className="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg cursor-pointer transition-colors">
+              <button
+                type="submit"
+                className="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg cursor-pointer transition-colors"
+              >
                 Register
               </button>
             </Link>
-           
 
             {/* Link to Login */}
             <p className="mt-4 text-center text-gray-600">
@@ -158,7 +200,7 @@ const RegisterPage = () => {
             </p>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
